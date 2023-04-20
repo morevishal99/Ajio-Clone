@@ -24,12 +24,13 @@ Deployed Link : https://frontend-ivory-tau.vercel.app/
 - Supriya Sahoo
 
 You can access the  website by the deployed url 
-  - For new user you need to sigin in 
-  - For existing user  you need login
+
+  - For new user you need to register 
+  - For existing user  you need login with user credentials 
   
   To access the admin side  
-   - User Id: admin  
-   - Password : 123456
+   - For new admin  you need to register  with including  @fashionflare.com in the email 
+   - For existing admin  you need login with admin credentails
 
 ## Some Screenshots of our Project :-
 
