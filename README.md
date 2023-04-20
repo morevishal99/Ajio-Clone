@@ -46,13 +46,16 @@ You can access the  website by the deployed url
 ![navbar1](https://user-images.githubusercontent.com/106108504/221401922-c8cb6426-aee6-4fc2-9028-34d264d13d2f.png)
 
 ### * Mens page
+![Screenshot (1279)](https://user-images.githubusercontent.com/107456969/233443657-01dac46e-b899-4c82-a8e8-d5d0afb8c663.png)
 
 ![mens1](https://user-images.githubusercontent.com/106108504/221402043-295083c1-e6dc-40c9-bca5-8ad96988ff3b.png)
 
 
 ### * Products detail page
+![Screenshot (1279)](https://user-images.githubusercontent.com/107456969/233443617-af315ac5-f4b8-4874-a49d-cb4e646c4ca1.png)
 
-![productdetails1](https://user-images.githubusercontent.com/106108504/221402132-e6cbd03b-32e8-4331-9209-6a3dc3b593cb.png)
+![productd![Screenshot (1280)](https://user-images.githubusercontent.com/107456969/233443687-d697bf40-9c38-421c-8a2f-7973eafd555a.png)
+etails1](https://user-images.githubusercontent.com/106108504/221402132-e6cbd03b-32e8-4331-9209-6a3dc3b593cb.png)
 
 ### * Cart page
 
