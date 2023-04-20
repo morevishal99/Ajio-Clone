@@ -39,7 +39,8 @@ You can access the  website by the deployed url
 
 ### * Home Page 
 
-![home1](https://user-images.githubusercontent.com/106108504/221401830-52ba33d9-9c7e-459c-a641-c0e72950f325.png)
+
+![Screenshot (1286)](https://user-images.githubusercontent.com/107456969/233445204-97ba0e23-7669-427c-abaf-7de005534d84.png)
 
 ### * Navbar and Drop down
 
