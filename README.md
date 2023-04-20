@@ -17,7 +17,7 @@ Deployed Link : https://frontend-ivory-tau.vercel.app/
 
 ### * Team-Members
 
-- Shashank Bijapur (Team Lead)
+- Shashank Bijapur
 - Shagun Sharma
 - Shreyash Birajdar
 - Vishal More
