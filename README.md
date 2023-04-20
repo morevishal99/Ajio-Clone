@@ -58,8 +58,9 @@ You can access the  website by the deployed url
 
 ### * Cart page
 
-![cart1](https://user-images.githubusercontent.com/106108504/221402095-4cd711d2-60e7-4346-b8ca-2d54eeb77923.png)
 
+
+![Screenshot (1288)](https://user-images.githubusercontent.com/107456969/233445498-3377522e-b15d-4777-a22c-e26d7e364b74.png)
 
 ### * Payment page
 
