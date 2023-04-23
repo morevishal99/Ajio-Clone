@@ -1,4 +1,5 @@
 import React from 'react'
+import { Show, Hide } from '@chakra-ui/react'
 import { Accordion, AccordionItem, AccordionButton, AccordionPanel, AccordionIcon, Box, Text, Input, Stack, Checkbox, } from '@chakra-ui/react'
 
 const Sidebar = ({ categoryFilter, onPriceFilterChange }) => {
@@ -20,13 +21,14 @@ const Sidebar = ({ categoryFilter, onPriceFilterChange }) => {
         <>{category === "men" ?
             <Box >
                 
+
                 <Accordion fontSize="10px" fontWeight={400} lineHeight='24px' color=' rgb(102, 102, 102)' border="1px solid rgb(240,240,240)" padding={"20px"} allowMultiple>
                     <AccordionItem marginTop="20px" >
                         <h2>
                             <AccordionButton fontSize="18px" fontWeight={600} lineHeight='24px' color=' rgb(26, 32, 44)' >
                                 <Box as="span" flex='1' textAlign='left'>
                                     <Text fontSize={"17px"}>Filters</Text>
-                                    
+
                                 </Box>
                             </AccordionButton>
                         </h2>
@@ -51,7 +53,7 @@ const Sidebar = ({ categoryFilter, onPriceFilterChange }) => {
                                 </Checkbox>
                                 <Checkbox value={"DENNISLINGO PREMIUM ATTIRE"}
                                     onChange={categoryFilter} borderRadius={"15px"} mt="5px" padding="10px" fontSize={"17px"} border={"1px solid rgb(240,240,240)"} colorScheme='green' >
-                                    DENNISLINGO 
+                                    DENNISLINGO
                                 </Checkbox>
                                 <Checkbox value={"Puma"}
                                     onChange={categoryFilter} borderRadius={"15px"} mt="5px" padding="10px" fontSize={"17px"} border={"1px solid rgb(240,240,240)"} colorScheme='green' >
@@ -353,16 +355,17 @@ const Sidebar = ({ categoryFilter, onPriceFilterChange }) => {
                         </AccordionPanel>
                     </AccordionItem>
                 </Accordion>
+
             </Box> :
             <Box >
-              
+
                 <Accordion fontSize="10px" fontWeight={400} lineHeight='24px' color=' rgb(102, 102, 102)' border="1px solid rgb(240,240,240)" padding={"20px"} allowMultiple>
                     <AccordionItem marginTop="20px" >
                         <h2>
                             <AccordionButton fontSize="18px" fontWeight={600} lineHeight='24px' color=' rgb(26, 32, 44)' >
                                 <Box as="span" flex='1' textAlign='left'>
                                     <Text fontSize={"17px"}>Filters</Text>
-                                    
+
                                 </Box>
                             </AccordionButton>
                         </h2>
@@ -381,7 +384,7 @@ const Sidebar = ({ categoryFilter, onPriceFilterChange }) => {
                         <AccordionPanel pb={4}>
 
                             <Stack spacing={5} direction='column'>
-                            <Checkbox value={"viewall"}
+                                <Checkbox value={"viewall"}
                                     onChange={categoryFilter} borderRadius={"15px"} mt="5px" padding="10px" fontSize={"17px"} border={"1px solid rgb(240,240,240)"} colorScheme='green' >
                                     VIEW ALL
                                 </Checkbox>

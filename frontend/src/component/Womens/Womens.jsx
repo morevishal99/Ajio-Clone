@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./Womens.css";
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
+
   Box,
-  Checkbox,
+
   Flex,
-  Input,
+
   Select,
-  Stack,
-  Text,
+  Show,
+
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -25,11 +21,13 @@ import MobileNav from '../Navbar/MobileNav';
 import { useMediaQuery } from '@chakra-ui/react'
 import { Loader } from "../Loader/Loader";
 import Sidebar from "../Sidebar/Sidebar";
+import Mobilesidebar from "../Sidebar/Mobilesidebar";
 
 function Womens() {
   const dispatch = useDispatch();
   const Products = useSelector((store) => store.ProductReducer.Products);
   // console.log('Products: ', Products);
+  // const [value,setInputValue]=useState("")
   const [priceFilter, setPriceFilter] = React.useState([]);
   const [count, setCount] = useState(0)
   const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
@@ -86,25 +84,32 @@ function Womens() {
 
       {isLargerThan800 ? <Navbar /> : <MobileNav />}
 
-      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" gap="40px">
+      <Box  position="fixed" top="29px" width="100%" margin={"auto"}  backgroundColor="white" zIndex={9} >
+        <Show breakpoint='(max-width: 450px)'>
 
+          <Mobilesidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
+
+        </Show>
+      </Box>
+      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" marginTop={"20px"} gap="40px">
         <Box display={{ base: "none", sm: "flex", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
           <Box className="women-left">
-            <Box>
 
 
-              <Sidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
 
-            </Box>
+
+            <Sidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
+
+
           </Box>
         </Box>
 
         <Box width={{ base: "100%", sm: "100%", md: "100%", lg: "70%" }}>
-          <hr />
-          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{base:"center",sm:"right"}}>
+         
+          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{ base: "center", sm: "right" }}>
             <Flex>
-             
-              <Select variant='unstyled' padding={"7px"}  border={"none"} onChange={(e) => handleSorting(e)} id="sort-select">
+
+              <Select variant='unstyled' padding={"7px"} border={"none"} onChange={(e) => handleSorting(e)} id="sort-select">
                 <option value=""> Select Price</option>
                 <option value="highToLow">Price High to Low</option>
                 <option value="lowToHigh">Price Low to High</option>

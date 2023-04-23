@@ -3,6 +3,7 @@ import {
   Box,
   Flex,
   Select,
+  Show,
   Text,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import MobileNav from '../Navbar/MobileNav';
 import { useMediaQuery } from '@chakra-ui/react'
 import { Loader } from "../Loader/Loader";
 import Sidebar from "../Sidebar/Sidebar";
+import Mobilesidebar from "../Sidebar/Mobilesidebar";
 
 function Mens() {
   const dispatch = useDispatch();
@@ -43,7 +45,7 @@ function Mens() {
     }
   };
 
-  
+
 
   const handlePriceFilterChange = (event) => {
     const value = parseInt(event.target.value);
@@ -71,10 +73,15 @@ function Mens() {
 
 
       {isLargerThan800 ? <Navbar /> : <MobileNav />}
+      <Box position="fixed" top="29px" width="100%" margin={"auto"} backgroundColor="white" zIndex={9} >
+        <Show breakpoint='(max-width: 450px)'>
+          <Mobilesidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
+        </Show>
+      </Box>
 
-      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" gap="40px">
+      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" marginTop={"20px"} gap="40px">
 
-      <Box display={{ base: "none", sm: "flex", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
+        <Box display={{ base: "none", sm: "flex", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
           <Box className="women-left">
             <Box>
 
@@ -86,18 +93,18 @@ function Mens() {
         </Box>
 
         <Box width={{ base: "100%", sm: "100%", md: "100%", lg: "70%" }}>
-          <hr />
-          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{base:"center",sm:"right"}}>
-            
-             <Flex>
+          
+          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{ base: "center", sm: "right" }}>
 
-              <Select variant='unstyled' padding={"7px"}  onChange={(e) => handleSorting(e)} id="sort-select">
+            <Flex>
+
+              <Select variant='unstyled' padding={"7px"} onChange={(e) => handleSorting(e)} id="sort-select">
                 <option value=""> Select Price</option>
                 <option value="highToLow">Price High to Low</option>
                 <option value="lowToHigh">Price Low to High</option>
               </Select>
-             </Flex>
-            
+            </Flex>
+
           </Box>
 
           <hr />

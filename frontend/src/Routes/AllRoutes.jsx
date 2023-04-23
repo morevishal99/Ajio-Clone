@@ -16,6 +16,8 @@ import PaymentsPage from '../component/PaymentModel/PaymentsPage';
 import Cart from '../component/Cart/Cart';
 import PrivateRoute from './PrivateRoute';
 
+import Address from '../component/PaymentModel/Address';
+
 
 
 const AllRoutes = () => {
@@ -31,7 +33,7 @@ const AllRoutes = () => {
             <Route path="/dashboard" element={
                 <PrivateRoute>  <Dashboard /> </PrivateRoute>
             }></Route>
-            
+
             <Route path='/store' element={<Store />}></Route>
             <Route path='/addProducts' element={<AddProducts />}></Route>
             <Route path='/addProduct' element={<AddProducts />}></Route>
@@ -42,6 +44,7 @@ const AllRoutes = () => {
                 <PrivateRoute>  <Wishlist />  </PrivateRoute>
             }></Route>
             <Route path="/payment" element={<PaymentsPage />} />
+            <Route path="/address" element={<Address />} />
             <Route path="/homeandkitchen" element={<Homeandkitchen />} />
         </Routes>
     )
