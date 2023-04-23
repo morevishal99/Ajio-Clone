@@ -53,7 +53,7 @@ export const getRequestforAdminSide = (params, category) => (dispatch) => {
     .get(`https://smiling-wear-pig.cyclic.app/product/${category}`, { params })
     .then((res) => {
       dispatch(getRequestSuccessAdminSide(res.data, category));
-      console.log(res.data)
+      // console.log(res.data)
     })
     .catch((err) => {
       dispatch(getRequestFailureAdminSide());
@@ -63,7 +63,7 @@ export const getRequestforAdminSide = (params, category) => (dispatch) => {
 export const patchRequestforAdminSide = (id, category, obj) => (dispatch) => {
   dispatch(patchRequestAdminSide);
 
-  console.log(id, category, obj, "from action");
+  // console.log(id, category, obj, "from action");
   return axios
     .patch(`https://smiling-wear-pig.cyclic.app/product/${category}/${id}`, obj)
     .then((res) => {
@@ -92,7 +92,7 @@ export const postRequestAdminSide = (category, data) => (dispatch) => {
   axios
     .post(`https://smiling-wear-pig.cyclic.app/product/${category}`, data)
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       dispatch(patchRequestSuccessAdminSide());
     })
     .then((err) => {

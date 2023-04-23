@@ -86,9 +86,9 @@ function Womens() {
 
       {isLargerThan800 ? <Navbar /> : <MobileNav />}
 
-      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" gap="80px">
+      <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" gap="40px">
 
-        <Box display={{ base: "none", sm: "none", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
+        <Box display={{ base: "none", sm: "flex", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
           <Box className="women-left">
             <Box>
 
@@ -101,10 +101,10 @@ function Womens() {
 
         <Box width={{ base: "100%", sm: "100%", md: "100%", lg: "70%" }}>
           <hr />
-          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent="right">
+          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{base:"center",sm:"right"}}>
             <Flex>
-              <Text >Sort by:</Text>
-              <Select onChange={(e) => handleSorting(e)} id="sort-select">
+             
+              <Select variant='unstyled' padding={"7px"}  border={"none"} onChange={(e) => handleSorting(e)} id="sort-select">
                 <option value=""> Select Price</option>
                 <option value="highToLow">Price High to Low</option>
                 <option value="lowToHigh">Price Low to High</option>
@@ -122,7 +122,8 @@ function Womens() {
               margin: "20px",
             }}
             gridTemplateColumns={{
-              sm: "repeat(1, 1fr)",
+              base: "repeat(1, 1fr)",
+              sm: "repeat(2, 1fr)",
               md: "repeat(2, 1fr) ",
               lg: "repeat(3, 1fr) ",
             }}

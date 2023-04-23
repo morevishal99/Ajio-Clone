@@ -84,7 +84,7 @@ export default function SignupCard() {
     }
     if (name && email && password) {
 
-      fetch("https://dizzy-plum-donkey.cyclic.app/auth/register", {
+      fetch("https://kind-plum-agouti-tam.cyclic.app/auth/register", {
         method: "POST",
         headers: {
           "Content-type": "application/json"
@@ -92,8 +92,8 @@ export default function SignupCard() {
         body: JSON.stringify(payload)
       })
         .then(res => { res.json() })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        // .then(res => console.log(res))
+        // .catch(err => console.log(err))
       toast({
         title: `SignIn Successfull`,
         position: "top",

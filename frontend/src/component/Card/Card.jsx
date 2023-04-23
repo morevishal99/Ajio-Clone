@@ -6,7 +6,7 @@ export const Card = ({ _id, src, brand, title, category, orginalPrice, discountP
   const navigate = useNavigate()
   const handledata = () => {
     const product = { _id, src, brand, title, category, orginalPrice,discount, discountPrice, offer, quantity: 1 }
-    console.log(product)
+    // console.log(product)
     localStorage.setItem("ProductsDetails", JSON.stringify(product))
     navigate(`/${category}/${_id}`)
   }

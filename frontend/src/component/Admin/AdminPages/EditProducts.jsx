@@ -86,7 +86,7 @@ function EditProducts() {
   useEffect(() => {
     if (mensJeans.length === 0) {
       dispatch(getRequestforAdminSide({}, "men-jeans"));
-      console.log(mensJeans);
+      // console.log(mensJeans);
     } else if (mensTshirt.length === 0) {
       dispatch(getRequestforAdminSide({}, "men-t-shirts"));
     } else if (womensKurtas.length === 0) {

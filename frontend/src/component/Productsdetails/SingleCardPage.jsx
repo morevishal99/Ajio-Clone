@@ -9,9 +9,10 @@ import { useToast } from '@chakra-ui/react'
 import Navbar from '../Navbar/Navbar';
 import MobileNav from '../Navbar/MobileNav';
 import { useMediaQuery } from '@chakra-ui/react'
+import BottomBar from '../Cart/BottomBar'
 const SingleCardPage = () => {
     var product = JSON.parse(localStorage.getItem('ProductsDetails'))
-    
+
 
     const toast = useToast()
     const { isOpen, onToggle } = useDisclosure()
@@ -36,7 +37,8 @@ const SingleCardPage = () => {
     const handletext = () => {
         setText(!text)
         if (text === true) {
-            axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist/add", product)
+            axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist/add", product)
+            // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist/add", product)
 
             toast({
                 title: `Product Added to Wishlist Successfully`,
@@ -50,7 +52,27 @@ const SingleCardPage = () => {
 
     const addtobag = () => {
         setcount(count++)
-        axios.post("https://dizzy-plum-donkey.cyclic.app/cart/add", product)
+        fetch("https://kind-plum-agouti-tam.cyclic.app/cart/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem("token")}`
+            },
+            body: JSON.stringify(product),
+        })
+            .then((res) => {
+                // console.log("tot:", res);
+                toast({
+                    title: "Add to cart",
+                    description: "Product is successfully added to cart",
+                    status: "success",
+                    duration: 4000,
+                    isClosable: true,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         toast({
             title: `Product Added to Cart Successfully`,
             position: "top",
@@ -66,14 +88,15 @@ const SingleCardPage = () => {
 
     return (<>
 
-{isLargerThan800 ? <Navbar /> : <MobileNav />}
+        {isLargerThan800 ? <Navbar /> : <MobileNav />}
+        <Image width="80%" margin="auto" src="https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg" />
         <Box display={{ base: "grid", md: "flex", lg: "flex", }} justifyContent="space-evenly" width="90%" margin="auto" >
 
-            <div >
-                <div style={{ placeItems: "center" }}>
+            <Box >
+                <Box style={{ placeItems: "center" }}>
                     <Image marginLeft={"60px"} placeItems={"center"} style={{ padding: "30px", }} width={{ base: "250px", md: "350px", lg: "400px" }} src={product.src} alt={product.brand} />
 
-                    <div style={{ textAlign: "center", }} >
+                    <Box style={{ textAlign: "center", }} >
                         <Button color={"grey"} border="1px solid grey" mt={4} padding="5px" onClick={onToggle}>Returns Details</Button>
                         <Fade in={isOpen}>
                             <Box
@@ -90,19 +113,19 @@ const SingleCardPage = () => {
                             </Box>
                         </Fade>
 
-                    </div>
-                </div>
-            </div>
+                    </Box>
+                </Box>
+            </Box>
 
-            <div style={{ textAlign: "center", padding: "10px" }} >
-                <div style={{ textAlign: "center", padding: "10px" }}>
+            <Box style={{ textAlign: "center", padding: "10px" }} >
+                <Box style={{ textAlign: "center", padding: "10px" }}>
                     <h5 style={{ color: "rgb(177, 153, 117)" }}>{product.brand}</h5>
                     <h5 style={{ fontSize: "16px", width: "300px", margin: "auto" }}>{product.title}</h5>
 
-                    <div style={{ display: "flex ", gap: "10px", textAlign: "center", justifyContent: "center" }}>
-                        <div style={{ color: "rgb(177, 153, 117)" }}>{product.discountPrice.includes("₹") ? product.discountPrice : `₹${product.discountPrice}`} <span style={{ textDecoration: "line-through" }}>{product.orginalPrice.includes("₹") ? product.orginalPrice : `₹${product.orginalPrice}`} </span> </div>
+                    <Box style={{ display: "flex ", gap: "10px", textAlign: "center", justifyContent: "center" }}>
+                        <Box style={{ color: "rgb(177, 153, 117)" }}>{product.discountPrice.includes("₹") ? product.discountPrice : `₹${product.discountPrice}`} <span style={{ textDecoration: "line-through" }}>{product.orginalPrice.includes("₹") ? product.orginalPrice : `₹${product.orginalPrice}`} </span> </Box>
                         <p style={{ color: "rgb(177, 153, 117)" }}>{product.discount} </p>
-                    </div>
+                    </Box>
 
                     <h5 style={{ color: "rgb(58,182,73)" }}>Offer Price ₹{product.offer}</h5>
                     <p>Price Inclusive Of All Taxes</p>
@@ -114,18 +137,18 @@ const SingleCardPage = () => {
                         <option value="el">Extra Large (xl)</option>
                         <option value="xxl"> xxl</option>
                     </select>
-                </div>
+                </Box>
 
                 {/* <DrawerExample/> */}
-                <div style={{ display: "grid ", gap: "10px", justifyContent: "center" }}>
+                <Box style={{ display: "grid ", gap: "10px", justifyContent: "center" }}>
                     <Text bg={"rgb(253,248,235)"} width={300} fontSize="10px" padding={"5px"} margin="auto">Select your size to know your estimated delivery date.</Text>
                     <Button disabled={count <= 1} onClick={addtobag} bg={"rgb(213,162,73)"} width={300} padding={"5px"} margin="auto"> Add to Bag</Button>
                     <Text width={300} fontSize="10px" padding={"5px"} margin="auto" color={"grey"}>HANDPICKED STYLES | ASSURED QUALITY</Text>
                     <Button bg={text ? "rgb(213,162,73)" : "red.600"} onClick={handletext} width={300} padding={"5px"} margin="auto"> {text ? "Save To WishList" : "Added To WishList"}</Button>
 
-                </div>
+                </Box>
 
-                <div style={{ display: 'inline', float: 'left', textAlign: "left", marginTop: "50px", fontSize: "16px" }}>
+                <Box style={{ display: 'inline', float: 'left', textAlign: "left", marginTop: "50px", fontSize: "16px" }}>
                     <h1 style={{
                         fontFamily: "SourceSansPro", fontSize: "14px", fontWeight: "900", lineHeight: "normal", color: " rgb(64, 103, 134)"
                     }}>Product Details</h1>
@@ -137,66 +160,53 @@ const SingleCardPage = () => {
                     <li>99% cotton, 1% elastane</li>
                     <li>Product Code:{product._id}</li>
 
-                </div>
-            </div>
+                </Box>
+            </Box>
         </Box>
 
 
-        <div style={{ width: "80%", margin: "auto", }}>
+        <Box style={{ width: "80%", margin: "auto", }}>
 
 
-            <div >
+            <Box >
 
-                <div>
+                <Box>
                     <h1 style={{
                         fontFamily: "Lora", fontSize: "26px", fontWeight: '700', lineHeight: "1.4px", color: "rgb(88, 88, 88)", marginTop: "100px",
                     }}>About {product.brand}</h1>
                     <hr style={{ display: "block", marginLeft: "auto", marginRight: "auto", borderStyle: "inset", borderWidth: "1px" }} />
-                </div>
+                </Box>
 
-                <div style={{ display: 'flex' }}>
-                    <div style={{ marginTop: "30px", backgroundColor: "maroon", padding: "20px", color: "white", fontFamily: "sans-serif", borderRadius: "600px" }}>
+                <Box style={{ display: 'flex' }}>
+                    <Box style={{ marginTop: "30px", backgroundColor: "maroon", padding: "20px", color: "white", fontFamily: "sans-serif", borderRadius: "600px" }}>
                         <h1>{product.brand}</h1>
-                    </div>
+                    </Box>
                     <p style={{ marginTop: "100px", width: "80%", margin: "auto", fontFamily: "areal", fontSize: "16px", color: "grey", padding: "30px" }}>Every day is different, so should be your look! Avaasa brings a designer collection of women’s fusion wear and ethnic clothes to AJIO, including floral print kurtas, block print kurtis, colourful shrugs, churidar leggings and more in a range of hues.</p>
-                </div>
-            </div>
+                </Box>
+            </Box>
 
 
-            <div>
+            <Box>
 
                 <h1 style={{
                     fontFamily: "Lora", fontSize: "26px", fontWeight: '700', lineHeight: "1.4px", color: "rgb(88, 88, 88)", marginTop: "100px",
                 }}>Shop more</h1>
                 <hr style={{ display: "block", marginLeft: "auto", marginRight: "auto", borderStyle: "inset", borderWidth: "1px" }} />
-                <div style={{ margin: "30px 0px", padding: "10px" }}>
+                <Box style={{ margin: "30px 0px", padding: "10px" }}>
                     <Carousel data={data} />
-                </div>
-                <Box display={{ base: "grid", md: "flex" }} style={{ justifyContent: "space-between", width: "60%", margin: "auto", marginTop: "50px" }}>
-                    <div onClick={navigateto} style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>View more</h1></div>
-                    <div style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>Style:view more</h1></div>
-                    <div style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>Brand:{product.brand}</h1></div>
                 </Box>
-            </div>
+                <Box display={{ base: "grid", md: "flex" }} style={{ justifyContent: "space-between", width: "60%", margin: "auto", marginTop: "50px" }}>
+                    <Box onClick={navigateto} style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>View more</h1></Box>
+                    <Box style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>Style:view more</h1></Box>
+                    <Box style={{ padding: "30px", background: "rgb(248,248,248)" }}> <h1>Brand:{product.brand}</h1></Box>
+                </Box>
+            </Box>
 
-        </div>
+        </Box>
 
 
 
-        <div style={{ display: "flex", justifyContent: "space-around", backgroundColor: "rgb(250,250,250)", marginTop: "100px" }}>
-            <div style={{}}>
-                <img width="60px" src="https://cdn-icons-png.flaticon.com/512/182/182308.png" alt="" />
-                <h2>Easy Returns</h2>
-            </div>
-            <div style={{}}>
-                <img width="60px" src="https://thumbs.dreamstime.com/b/empathy-vector-icon-black-silhouette-flat-illustration-isolated-white-background-204899514.jpg" alt="" />
-                <h2>!100% Hand Picked</h2>
-            </div>
-            <div style={{}}>
-                <img width="60px" src="https://d1pt6w2mt2xqso.cloudfront.net/AcuCustom/Sitename/DAM/044/FSEweek-icon-tick.png" alt="" />
-                <h2> Assured Quality</h2>
-            </div>
-        </div>
+        <BottomBar />
 
 
 

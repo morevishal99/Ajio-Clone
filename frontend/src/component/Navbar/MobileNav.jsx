@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import Logo2 from "../Images/fashion_flare.png"
 import {
   Flex,
@@ -13,7 +13,7 @@ import MobileItem from "./MobileItem";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BsFillBagCheckFill, BsFillSuitHeartFill } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import { SidebarContext } from "../context/SidebarContextProvider";
+// import { SidebarContext } from "../context/SidebarContextProvider";
 import { useToast } from "@chakra-ui/react";
 
 const MobileNav = () => {
@@ -23,8 +23,8 @@ const MobileNav = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast();
   const navigate = useNavigate();
-  const { cartData, setCartData, cartLength, setCartLength, setCategory } =
-    useContext(SidebarContext);
+  // const { cartData, setCartData, cartLength, setCartLength, setCategory } =
+  //   useContext(SidebarContext);
   const handleLogout = () => {
     localStorage.clear();
     toast({
@@ -97,7 +97,7 @@ const MobileNav = () => {
             </Modal>
           </Box> : <Link to="/login" ><Button colorScheme='green'>Login</Button></Link>}
         </Box>
-        {loginValue ? <Box display={"grid"}><Text fontSize={{ base: "12px", sm: "16px" }} >{userName? userName.toUpperCase():null}</Text> <Text fontSize={{ base: "12px", sm: "16px" }}  >{userEmail}</Text></Box> : null}
+        {loginValue ? <Box display={"grid"}><Text fontSize={{ base: "12px", sm: "16px" }} >{userName ? userName.toUpperCase() : null}</Text> <Text fontSize={{ base: "12px", sm: "16px" }}  >{userEmail}</Text></Box> : null}
 
         <Link to="/cart">
 
@@ -112,7 +112,7 @@ const MobileNav = () => {
           >
             <BsFillBagCheckFill style={{ fontSize: "20px" }} />
             <Text as="b" fontSize={"xs"}>
-              {cartLength}
+
             </Text>
           </Box>
         </Link>

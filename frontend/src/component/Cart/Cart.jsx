@@ -1,19 +1,20 @@
 import axios from 'axios'
 import React, { useState, useEffect, useRef } from 'react'
-import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton, Select, } from '@chakra-ui/react'
+import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton, Select, useToast, } from '@chakra-ui/react'
 import { Box, Button, Checkbox, CheckboxGroup, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Input, useDisclosure } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import Paymentmodal from '../PaymentModel/Payments';
 import { useDispatch } from "react-redux"
-import { getCartData } from '../../redux/action'
+// import { getCartData } from '../../redux/action'
 import { useMediaQuery } from '@chakra-ui/react'
 import Navbar from '../Navbar/Navbar';
 import MobileNav from '../Navbar/MobileNav';
+import BottomBar from './BottomBar';
 
 const Cart = () => {
     const [cart, setcart] = useState([])
-    const [size, setsize] = useState("M")
+
     const [cartitem, setCartitem] = useState([])
     // const [count, setCount] = useState(1)
     const [counter, setCounter] = useState(1)
@@ -23,38 +24,53 @@ const Cart = () => {
     const { isOpen, onToggle } = useDisclosure()
     const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
     const [qty, setQty] = useState(1);
+    const toast = useToast()
 
     const getcartdata = () => {
-        axios.get("https://dizzy-plum-donkey.cyclic.app/cart")
-            .then(res => {
-                setcart(res.data)
-                dispatch(getCartData(res.data))
 
-                const total = cart.reduce((a1, a2) => {
-                    return Number(a1.price) + Number(a2.price)
-                })
-                ref.current = total
+        axios
+            .get("https://kind-plum-agouti-tam.cyclic.app/cart", {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
             })
+            .then((res) => {
+
+                setcart(res.data)
+                // dispatch(getCartData(res.data))
+                // console.log(res.data);
+            })
+            .catch((e) => {
+                // console.log(e);
+
+            });
     }
     const handleclick = () => {
         navigate("/")
     }
-    const handleSizeChange = (event) => {
-        setsize(event.target.value);
-    };
+
 
     const deleteitem = (id) => {
 
-        axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/delete/${id}`)
-            // .then(res => setcart(res.data))
+        axios.delete(`https://kind-plum-agouti-tam.cyclic.app/cart/delete/${id}`)
+
             .then(res => getcartdata())
-            // .then((res) => dispatch(getCartData(res.data)))
-            
-        
+        toast({
+            title: `Product Deleted From Cart `,
+            position: "top",
+            status: 'success',
+            duration: 3000,
+            isClosable: true,
+        })
+        // .then((res) => dispatch(getCartData(res.data)))
+
+
+
     }
     const addtowishlist = (item, id) => {
 
-        axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist", item)
+        axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist", item)
+            // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist", item)
             .then(r => setCartitem(r.data))
 
         axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
@@ -66,13 +82,23 @@ const Cart = () => {
     }
 
     const handleQuantity = (id) => {
-        const payload = { quantity: qty };
-        axios.patch(`https://dizzy-plum-donkey.cyclic.app/cart/update/${id}`, payload)
+        setTimeout(() => {
+            const payload = { quantity: qty };
 
-            // .then((res) => {
-            //     getCartData(res);
-            // })
-            // .catch((e) => console.log(e));
+            axios.patch(`https://kind-plum-agouti-tam.cyclic.app/cart/update/${id}`, payload)
+
+                .then((res) => {
+                    getcartdata()
+                })
+            toast({
+                title: `Quantity updated`,
+                position: "top",
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            })
+        }, 1000)
+        // .catch((e) => console.log(e));
     };
     useEffect(() => {
         getcartdata()
@@ -91,9 +117,9 @@ const Cart = () => {
                     <Button onClick={handleclick} bg={"rgb(213,162,73)"} padding="10px" color="white">Continue Shopping</Button>
                     <Box margin="auto" padding={"30px"}  >
                         <hr />
-                        <Flex display={{base:"grid",sm:"grid",md:"flex"}}  padding={"30px"} justifyContent={"space-around"} color="rgb(213,162,73)">
+                        <Flex display={{ base: "grid", sm: "grid", md: "flex" }} padding={"30px"} justifyContent={"space-around"} color="rgb(213,162,73)">
                             <Flex>
-                                <Image width={{base:"30px",sm:"40px",md:"30px"}}padding="5px" src='https://penncommunitybank.imgix.net/wp-content/uploads/2019/11/security-icon.png?auto=compress&fit=crop' />
+                                <Image width={{ base: "30px", sm: "40px", md: "30px" }} padding="5px" src='https://penncommunitybank.imgix.net/wp-content/uploads/2019/11/security-icon.png?auto=compress&fit=crop' />
                                 <Text padding={"10px"}>SECURE PAYMENTS</Text>
                             </Flex>
                             <Flex>
@@ -114,7 +140,7 @@ const Cart = () => {
                     </Box>
 
 
-                    <Flex  padding={"20px"} justifyContent="space-around" backgroundColor="rgb(250,250,250)" marginTop="20px">
+                    <Flex padding={"20px"} justifyContent="space-around" backgroundColor="rgb(250,250,250)" marginTop="20px">
                         <Box justifyContent={"center"} alignItems="center" >
                             <img width="60px" src="https://cdn-icons-png.flaticon.com/512/182/182308.png" alt="" />
                             <Text>Easy Returns</Text>
@@ -130,10 +156,10 @@ const Cart = () => {
                     </Flex>
                 </Box> :
                 <Box>
-                        <Image width={"80%"} margin="auto" src={"https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg"}/>
+                    <Image width={"80%"} margin="auto" src={"https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg"} />
                     <Box width={"80%"} display={{ base: "grid", sm: "flex" }} margin="auto" gap={"20px"} >
                         <Box width={{ base: "100%", sm: "70%" }} margin={"auto"} marginTop={"30px"} >
-                            <Text textAlign={"left"}>My Bag({cart.length}item)</Text>
+                            <Text fontSize={"20px"} color="goldenrod" textAlign={"left"}>My Bag ({cart.length}item)</Text>
                             <Box style={{ textAlign: "center" }}>
                                 {cart.map((item) =>
                                     <Box key={item._id} padding={"5px"} border="1px solid rgb(250,230,250)" display={{ base: "grid", md: "flex" }} justifyContent="space-evenly" gap="20px" marginTop="20px">
@@ -242,7 +268,7 @@ const Cart = () => {
                                 <Paymentmodal total={sum} />
 
                             </Box>
-
+                            {/* coupon box */}
                             <Box marginTop={"50px"}>
                                 <Text>Apply Coupon</Text>
                                 <Flex gap={"10px"} padding="10px">
@@ -347,47 +373,10 @@ const Cart = () => {
                                 <Text color={"rgb(38, 140, 185)"} fontWeight="700">Retun Policy</Text>
                             </Box>
                         </Box>
-
-
                     </Box>
 
-                    <hr />
-                    <Box display={"grid"} width="100%" margin="auto" gridTemplateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }} justifyContent="space-around" backgroundColor="rgb(250,250,250)" color="rgb(213,162,73)" marginTop="20px" padding={"30px"}  >
-                        <Flex display={{base:"grid",sm:"grid",md:"flex"}} >
-                            <Image width={"40px"} padding="5px" src='https://penncommunitybank.imgix.net/wp-content/uploads/2019/11/security-icon.png?auto=compress&fit=crop' />
-                            <Text padding={"10px"}>SECURE PAYMENTS</Text>
-                        </Flex>
-                        <Flex>
-                            <Image width={"40px"} padding="5px" src='https://static.thenounproject.com/png/2724368-200.png' />
-                            <Text padding={"10px"}>CASH ON DELIVERY</Text>
-                        </Flex>
-                        <Flex>
-                            <Image width={"40px"} padding="5px" src='https://cdn-icons-png.flaticon.com/512/1883/1883880.png' />
-                            <Text padding={"10px"}>ASSURED QUALITY</Text>
-                        </Flex>
-                        <Flex>
-                            <Image width={"40px"} padding="5px" src='https://static.thenounproject.com/png/1015317-200.png' />
-                            <Text padding={"10px"}>EASY RETURNS</Text>
-                        </Flex>
-                    </Box>
-
-                    <hr style={{ fontSize: "10px" }} />
-
-                    <Box display={"grid"} width="100%" margin="auto" gridTemplateColumns={{ base: "repeat(2, 1fr)", md: "repeat(3, 1fr)" }} justifyContent="space-around" backgroundColor="rgb(250,250,250)" marginTop="20px">
-                        <div >
-                            <img width="60px" src="https://cdn-icons-png.flaticon.com/512/182/182308.png" alt="" />
-                            <h2>Easy Returns</h2>
-                        </div>
-                        <div >
-                            <img width="60px" src="https://thumbs.dreamstime.com/b/empathy-vector-icon-black-silhouette-flat-illustration-isolated-white-background-204899514.jpg" alt="" />
-                            <h2>!100% Hand Picked</h2>
-                        </div>
-                        <div >
-                            <img width="60px" src="https://d1pt6w2mt2xqso.cloudfront.net/AcuCustom/Sitename/DAM/044/FSEweek-icon-tick.png" alt="" />
-                            <h2> Assured Quality</h2>
-                        </div>
-                    </Box>
-                    <hr />
+                    {/* bottom bar form secure payments */}
+                    <BottomBar />
                 </Box>}
 
 

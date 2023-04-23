@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../Images/fashion_flare.png"
-import Admin from "../../Images/Admin.png"
+// import Admin from "../../Images/Admin.png"
 import {
   IconButton,
   Avatar,
@@ -28,9 +28,7 @@ import {
   FiHome,
   FiTrendingUp,
   FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
+  
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
@@ -40,8 +38,7 @@ const LinkItems = [
   { name: "Dashboard", icon: FiHome, to: "/dashboard" },
   { name: "Store", icon: FiTrendingUp, to: "/store" },
   { name: "AddProducts", icon: FiCompass, to: "/addproducts" },
-  { name: "Favourites", icon: FiStar, to: "/favourites" },
-  { name: "Settings", icon: FiSettings, to: "/settings" },
+ 
 ];
 
 

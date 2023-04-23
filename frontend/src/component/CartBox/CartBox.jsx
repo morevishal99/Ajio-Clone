@@ -23,17 +23,17 @@ const CartBox = ({ item, setCount,count }) => {
     const handleSizeChange = (event) => {
         setsize(event.target.value);
     };
-    console.log(cartitem)
+    // console.log(cartitem)
     const deleteitem = (id) => {
        
-        console.log(id)
+        // console.log(id)
         axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
             // .then(res=>res.json())
             .then(res => setCartitem(res.data))
 
     }
     const addtowishlist = (item, id) => {
-        console.log(item)
+        // console.log(item)
         // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist",item)
         // .then((r) => {
         //    console.log(r.data)

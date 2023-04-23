@@ -11,10 +11,10 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useState, useContext } from "react";
+import { useState, } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { SidebarContext } from "../context/SidebarContextProvider";
+// import { SidebarContext } from "../context/SidebarContextProvider";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import Navbar from '../Navbar/Navbar';
@@ -32,16 +32,17 @@ export default function SimpleCard() {
   const handleLogin = () => {
     if (email && password) {
       axios
-        .post(`https://dizzy-plum-donkey.cyclic.app/auth/login`, {
+        .post(`https://kind-plum-agouti-tam.cyclic.app/auth/login`, {
           email: email,
           password: password,
         })
         .then((res) => {
-          console.log(res)
-          if(res.data.email.includes("fashionflare")){
+          // console.log(res)
+          if (res.data.email.includes("fashionflare")) {
             localStorage.setItem("adminusername", (res.data.firstname))
             localStorage.setItem("adminnuseremail", (res.data.email))
             localStorage.setItem("login", true)
+
             toast({
               title: `Admin Login Success`,
               position: "top",
@@ -55,6 +56,7 @@ export default function SimpleCard() {
             localStorage.setItem("username", (res.data.firstname))
             localStorage.setItem("useremail", (res.data.email))
             localStorage.setItem("login", true)
+            localStorage.setItem("token", res.data.token)
             toast({
               title: `Login Success`,
               position: "top",
@@ -93,7 +95,7 @@ export default function SimpleCard() {
     }
     setEmail("");
     setPassword("");
-  
+
   };
 
   return (

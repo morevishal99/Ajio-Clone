@@ -1,16 +1,19 @@
-const jwt =require("jsonwebtoken")
-const Authentication=(req,res,next)=>{
-    const token=req.headers.authorization.split(" ")[1]
-    if(token){
-        const decoded =jwt.verify(token,"fashionflare");
-        if(decoded){
-            req.body.userid=decoded.userid;
-            next()
-        }
-    }else{
-        res.status(400).send({"msg":"login fisrt"})
+const jwt = require("jsonwebtoken");
+
+const auth = (req, res, next) => {
+  const token = req.headers.authorization
+  // console.log('token: ', token);
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, "fashionflare");
+      req.body.userid = decoded.userid;
+      next();
+    } catch (err) {
+      res.status(400).send({ msg: "Please Login First" });
     }
-}
+  } else {
+    res.status(400).send({ msg: "Please Login First" });
+  }
+};
 
-
-module.exports={Authentication}
+module.exports = { auth };

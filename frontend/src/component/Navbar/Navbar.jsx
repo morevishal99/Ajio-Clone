@@ -1,9 +1,9 @@
-import React, { useContext, useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Flex, Text, Image, Button, useDisclosure } from "@chakra-ui/react";
 import { BsFillBagCheckFill, BsFillSuitHeartFill } from "react-icons/bs";
 import Menuitem from "./MenuItem";
 import { Link } from "react-router-dom";
-import { SidebarContext } from "../context/SidebarContextProvider";
+// import { SidebarContext } from "../context/SidebarContextProvider";
 import { useNavigate } from "react-router-dom";
 import Logo2 from "../Images/fashion_flare.png"
 import { useToast } from "@chakra-ui/react";
@@ -18,11 +18,10 @@ const Navbar = ({ cartlength }) => {
   const toast = useToast();
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { setCategory } = useContext(SidebarContext);
-  const [cart, setcart] = useState([])
-  const [wishlist, setwishlist] = React.useState([])
 
-  const hanldecart=()=>{
+
+
+  const hanldecart = () => {
     navigate('/cart')
   }
   const handleLogout = () => {
@@ -36,16 +35,7 @@ const Navbar = ({ cartlength }) => {
     });
     navigate('/login')
   }
-  useEffect(() => {
-    
-    axios.get("https://dizzy-plum-donkey.cyclic.app/cart")
-      .then(res => {
-        setcart(res.data)
-      })
 
-      axios.get("https://dizzy-plum-donkey.cyclic.app/wishlist")
-      .then(((res) => setwishlist(res.data)))
-  }, []);
   return (
     <>
       <Flex justifyContent={"space-around"} alignItems={"center"} padding="10px" position={"fixed"} top="0" width="100%" zIndex={"999"} backgroundColor="#fff">
@@ -60,6 +50,16 @@ const Navbar = ({ cartlength }) => {
         </Box>
         <Box>
           <Flex gap="30px" alignItems={"center"}>
+          <Link to="/women" onClick={() => localStorage.setItem("category", ("womens"))}>
+              <Box>
+                <Menuitem
+                  navitem={"WOMEN"}
+                  item1={
+                    <Navmenu />
+                  }
+                />
+              </Box>
+            </Link>
             <Link to="/men" onClick={() => localStorage.setItem("category", ("men"))}>
               <Box>
                 <Menuitem
@@ -70,17 +70,8 @@ const Navbar = ({ cartlength }) => {
                 />
               </Box>
             </Link>
-            <Link to="/women" onClick={() => localStorage.setItem("category", ("womens"))}>
-              <Box>
-                <Menuitem
-                  navitem={"WOMEN"}
-                  item1={
-                    <Navmenu />
-                  }
-                />
-              </Box>
-            </Link>
-            <Link to="/kid" onClick={() => setCategory("kids-clothing")}>
+            
+            <Link to="/kid" >
               <Box>
                 <Menuitem
                   navitem={"KIDS"}
@@ -124,19 +115,19 @@ const Navbar = ({ cartlength }) => {
               </Box> : <Link to="/login" ><Button colorScheme='green'>Login</Button></Link>}
             </Box>
 
-            {loginValue ? <Box display={"grid"}><Text  >{userName? userName.toUpperCase():null}</Text> <Text >{userEmail}</Text></Box> : null}
+            {loginValue ? <Box display={"grid"}><Text  >{userName ? userName.toUpperCase() : null}</Text> <Text >{userEmail}</Text></Box> : null}
 
             <Link to="/cart">
               <Box display="flex" gap={'2'}  >
                 <BsFillBagCheckFill style={{ fontSize: "30px" }} />
-                <Text alignSelf={"end"} as="b" >{loginValue? cart.length>0?cart.length:null:null}</Text>
+                {/* <Text alignSelf={"end"} as="b" >{loginValue? cart.length>0?cart.length:null:null}</Text> */}
               </Box>
             </Link>
 
             <Link to="/wishlist">
               <Box display="flex" gap={'2'}  >
                 <BsFillSuitHeartFill style={{ fontSize: "28px" }} />
-                <Text alignSelf={"end"} as="b" >{loginValue? wishlist.length>0?wishlist.length:null:null}</Text>
+                {/* <Text alignSelf={"end"} as="b" >{loginValue? wishlist.length>0?wishlist.length:null:null}</Text> */}
               </Box>
             </Link>
           </Flex>

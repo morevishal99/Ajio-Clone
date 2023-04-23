@@ -64,7 +64,7 @@ productRoute.post("/add", async (req, res) => {
 
 productRoute.get("/:category/:_id", async (req, res) => {
     const param = req.params
-    console.log("param",param)
+    // console.log("param",param)
   try {
     const singleProduct = await ProductModel.find(param);
     // console.log("AllProduct", allProduct);

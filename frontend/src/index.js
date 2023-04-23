@@ -5,13 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import SidebarContextProvider from "./component/context/SidebarContextProvider";
+// import SidebarContextProvider from "./component/context/SidebarContextProvider";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <SidebarContextProvider>
+  // <SidebarContextProvider>
     <ChakraProvider>
       <BrowserRouter>
         <Provider store={store}>
@@ -19,7 +19,7 @@ root.render(
         </Provider>
       </BrowserRouter>
     </ChakraProvider>
-  </SidebarContextProvider>
+  // </SidebarContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
