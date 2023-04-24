@@ -50,16 +50,16 @@ const MobileNav = () => {
       >
         <MobileItem
           nameitem={<GiHamburgerMenu />}
-          item1={<Link to="/women">
+          item1={<Link to="/women"onClick={() => localStorage.setItem("category", ("women"))}>
             WOMENS
           </Link>}
-          item2={<Link to="/men">
+          item2={<Link to="/men" onClick={() => localStorage.setItem("category", ("men"))}>
             MENS
           </Link>}
           item3={<Link to="/kid">
             KIDS
           </Link>}
-          item4={<Link to="/homeandkitchen">
+          item4={<Link to="/homeandkitchen" >
             HOME & KITCHEN
           </Link>}
 

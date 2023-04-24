@@ -37,7 +37,7 @@ const SingleCardPage = () => {
     const handletext = () => {
         setText(!text)
         if (text === true) {
-            axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist/add", product)
+            // axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist/add", product)
             // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist/add", product)
 
             toast({

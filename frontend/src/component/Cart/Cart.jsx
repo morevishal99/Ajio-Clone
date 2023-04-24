@@ -68,13 +68,20 @@ const Cart = () => {
 
     }
     const addtowishlist = (item, id) => {
+        toast({
+            title: `Wishlist function not enabled `,
+            position: "top",
+            status: 'error',
+            duration: 3000,
+            isClosable: true,
+        })
 
-        axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist", item)
+        // axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist", item)
             // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist", item)
-            .then(r => setCartitem(r.data))
+            // .then(r => setCartitem(r.data))
 
-        axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
-            .then(res => setCartitem(res.data))
+        // axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
+            // .then(res => setCartitem(res.data))
     }
     let sum = 0;
     for (let i = 0; i < cart.length; i++) {
