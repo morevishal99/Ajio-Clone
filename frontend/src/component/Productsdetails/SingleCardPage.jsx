@@ -148,7 +148,7 @@ const SingleCardPage = () => {
 
                 </Box>
 
-                <Box style={{ display: 'inline', float: 'left', textAlign: "left", marginTop: "50px", fontSize: "16px" }}>
+                <Box style={{ display: 'inline', float: 'right', textAlign: "left", marginTop: "50px", fontSize: "16px" }}>
                     <h1 style={{
                         fontFamily: "SourceSansPro", fontSize: "14px", fontWeight: "900", lineHeight: "normal", color: " rgb(64, 103, 134)"
                     }}>Product Details</h1>
