@@ -11,6 +11,7 @@ import { useMediaQuery } from '@chakra-ui/react'
 import Navbar from '../Navbar/Navbar';
 import MobileNav from '../Navbar/MobileNav';
 import BottomBar from './BottomBar';
+import cartg from "./cart.png"
 
 const Cart = () => {
     const [cart, setcart] = useState([])
@@ -58,7 +59,7 @@ const Cart = () => {
         toast({
             title: `Product Deleted From Cart `,
             position: "top",
-            status: 'success',
+            status: 'error',
             duration: 3000,
             isClosable: true,
         })
@@ -94,9 +95,9 @@ const Cart = () => {
 
             axios.patch(`https://kind-plum-agouti-tam.cyclic.app/cart/update/${id}`, payload)
 
-                .then((res) => {
+                .then((res) => 
                     getcartdata()
-                })
+                )
             toast({
                 title: `Quantity updated`,
                 position: "top",
@@ -119,6 +120,7 @@ const Cart = () => {
                     <div>
                         <img src="https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg" alt="" />
                         <h1 style={{ padding: "20px", color: "rgb(88, 88, 88)", fontFamily: "SourceSansProSemiBold", fontWeight: "400" }}>Your Shopping Bag is Empty!!</h1>
+                        <Image width={"200px"} backgroundColor={"white"} color={"red"} margin="auto" borderRadius={"20px"} marginBottom={"20px"} src={cartg}/>
                     </div>
 
                     <Button onClick={handleclick} bg={"rgb(213,162,73)"} padding="10px" color="white">Continue Shopping</Button>
