@@ -35,7 +35,7 @@ import Navbar from "../Navbar/Navbar";
               Payment Successfull !
             </AlertTitle>
             <AlertDescription maxWidth="sm">
-              Thanks for ordering from <b>Shop Vibes</b>.
+              Thanks for ordering from <b>Fashion Flare</b>.
               <br />
             </AlertDescription>
             <Image
