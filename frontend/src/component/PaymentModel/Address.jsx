@@ -68,21 +68,21 @@ function Address() {
 
       <Box pb="50px">
         {/* Address Box */}
-        <Box m="auto"mt="10px"width={"80%"}>
+        <Box m="auto" mt="10px" width={"80%"}>
           <Text textAlign={"left"} fontSize={"25px"}>
             Shipping Address
           </Text>
         </Box>
 
         <Box
-         
-          display={{base:"grid",sm:"flex"}}
+
+          display={{ base: "grid", sm: "flex" }}
           justifyContent="space-around"
           width={"80%"}
           m="auto"
         >
-          <Box width={{base:"100%",sm:"50%"}} >
-            <Box  border={"1px solid re"}>
+          <Box width={{ base: "100%", sm: "50%" }} >
+            <Box border={"1px solid re"}>
               <FormControl isRequired>
                 <Box display={"flex"} justifyContent={"space-between"} mb="20px">
                   <Box border={"1px solid re"} width="49%">
@@ -180,7 +180,7 @@ function Address() {
             </Box>
           </Box>
 
-          <Box width={{base:"100%",sm:"30%"}} >
+          <Box width={{ base: "100%", sm: "30%" }} >
             {/* Payment Box */}
             <Box padding={"5px"} margin={"5px"} >
 
@@ -201,11 +201,7 @@ function Address() {
                 <Text>{Number(sum) - total}</Text>
 
               </Flex>
-              <Flex padding={"5px"} justifyContent={"space-between"} color="rgb(51, 51, 51)" >
-                <Text>Delivery </Text>
-                <Text>{Number(sum) >= 1000 ? "Free " : "RS 99"}</Text>
 
-              </Flex>
               <Flex padding={"5px"} justifyContent={"space-between"} fontWeight="600" color="rgb(51, 51, 51)" >
                 <Text>Order total</Text>
 
@@ -223,9 +219,9 @@ function Address() {
         </Box>
       </Box>
 
-        <Text padding="10px" textAlign={"left"} width="80%" margin="auto" color={"rgb(213,162,73)"} fontSize="20px">Items in your bag</Text>
-      <Box  width={"80%"} margin="auto" display={"grid"} gap="10px" justifyContent="space-between" gridTemplateColumns={{base:"repeat(1,1fr)",sm:"repeat(2,1fr)",md:"repeat(3,1fr)"}} marginBottom={"50px"}>
-        
+      <Text padding="10px" textAlign={"left"} width="80%" margin="auto" color={"rgb(213,162,73)"} fontSize="20px">Items in your bag</Text>
+      <Box width={"80%"} margin="auto" display={"grid"} gap="10px" justifyContent="space-between" gridTemplateColumns={{ base: "repeat(1,1fr)", sm: "repeat(2,1fr)", md: "repeat(3,1fr)" }} marginBottom={"50px"}>
+
         {
           cart.map((item) =>
             <Box display={"flex"} gap="10px">

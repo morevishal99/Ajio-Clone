@@ -4,7 +4,7 @@ import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, Po
 import { Box, Button, Checkbox, CheckboxGroup, Flex, Image, Stack, Text } from '@chakra-ui/react';
 import { Input } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
-import Paymentmodal from '../PaymentModel/Payments';
+
 // import { useDispatch } from "react-redux"
 // import { getCartData } from '../../redux/action'
 import { useMediaQuery } from '@chakra-ui/react'
@@ -114,7 +114,7 @@ const Cart = () => {
 
     const couponfunc = () => {
 
-        if (sum <= 1500) {
+        if (sum <= 1500&&sum>=1000) {
             if (coupon === "GET500OFF") {
                 toast({
                     title: `Coupon Applied `,
@@ -124,11 +124,9 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 500
-            } else {
-                return 0
-            }
+            } 
         }
-        if (sum <= 2499) {
+        if (sum <= 2500 &&sum>=2400) {
             if (coupon === "GET700OFF") {
                 toast({
                     title: `Coupon Applied `,
@@ -138,9 +136,7 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 700
-            } else {
-                return 0
-            }
+            } 
         }
         if (sum >= 4000) {
             if (coupon === "SHOPNOW") {
@@ -152,9 +148,7 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 1500
-            } else {
-                return 0
-            }
+            } 
         }
         else {
             if (coupon === "FREEDEL") {

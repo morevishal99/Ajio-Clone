@@ -40,14 +40,14 @@ const Checkout = () => {
                 {
                     value === "upi" ? <Box width={{base:"80%",sm:"50%"}}  margin="auto">
                         <Input padding={"20px"} margin="10px" type="text" placeholder='ENTER UPI ID' />
-                        <Button bg={"rgb(213,162,73)"} width="100%" padding={"20px"} margin="10px" color="white" >Pay Now</Button>
+                        <Button onClick={()=>navigate("/thankyou")} bg={"rgb(213,162,73)"} width="100%" padding={"20px"} margin="10px" color="white" >Pay Now</Button>
                     </Box> : ""
                 }
                 {
                     value === "net" ? <Box width={{base:"80%",sm:"50%"}}  margin="auto">
                         <Input padding={"20px"} margin="10px" type="text" placeholder='ENTER USER ID' />
                         <Input padding={"20px"} margin="10px" type="text" placeholder='ENTER PASSWORD' />
-                        <Button bg={"rgb(213,162,73)"} width="100%" padding={"20px"} margin="10px" color="white" >Pay Now</Button>
+                        <Button onClick={()=>navigate("/thankyou")} bg={"rgb(213,162,73)"} width="100%" padding={"20px"} margin="10px" color="white" >Pay Now</Button>
                     </Box> : ""
                 }
             </Flex>
