@@ -1,290 +1,245 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Text,
   Input,
-  InputGroup,
+
   Button,
-  InputRightElement,
+
   FormControl,
   FormLabel,
-  useToast,Image
+  Image, Flex
 } from "@chakra-ui/react";
-import { useContext } from "react";
+
 import { useNavigate } from "react-router-dom";
 // import { AuthContext } from "../Context/AuthContext";
 import { useMediaQuery } from '@chakra-ui/react'
 import { useState } from "react";
 import Navbar from "../Navbar/Navbar";
 import MobileNav from "../Navbar/MobileNav";
-const init = {
-  firstname: "",
-  lastname: "",
-  pincode: "",
-  address1: "",
-  address2: "",
-  city: "",
-  state: "",
-  phone: "",
-};
+
+import axios from "axios";
+
 function Address() {
-  const [form, setForm] = useState(init);
-  const toast = useToast();
+
+
   const navigate = useNavigate();
-//   const { totalPrice } = useContext(AuthContext);
-const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
-  const callToast = () => {
-    toast({
-      title: "Please Enter all the Details",
-      position: "top",
-      isClosable: true,
-    });
-  };
+  //   const { totalPrice } = useContext(AuthContext);
+  const total = localStorage.getItem("total")
+  const [cart, setcart] = useState([]);
+  console.log('cart: ', cart);
+  const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
+  const getcartdata = () => {
 
-  const {
-    firstname,
-    lastname,
-    pincode,
-    address1,
-    address2,
-    city,
-    state,
-    phone,
-  } = form;
+    axios
+      .get("https://kind-plum-agouti-tam.cyclic.app/cart", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
 
-  
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-    console.log(name, value);
-    setForm({ ...form, [name]: value });
-  };
+        setcart(res.data)
+        // dispatch(getCartData(res.data))
+        // console.log(res.data);
+      })
+      .catch((e) => {
+        // console.log(e);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let flag = true;
-    for (let x in form) {
-      if (form[x] === "") {
-        flag = false;
-      }
-    }
+      });
+  }
+  let sum = 0;
+  for (let i = 0; i < cart.length; i++) {
+    sum += cart[i].discountPrice * cart[i].quantity;
+  }
 
-    if (flag) {
-      navigate("/checkout");
-    } else {
-      callToast();
-    }
-  };
-  console.log(form);
+
+
+
+
+
+  // console.log(form);
+  useEffect(() => {
+    getcartdata()
+  }, []);
   return (
     <>
-    {isLargerThan800 ? <Navbar /> : <MobileNav />}
-    <Box border="1px solid re" pb="50px">
-      <Box
-        className="heading"
-        border={"1px solid blak"}
-        m="auto"
-        mt="40px"
-        width={"80%"}
-      >
-        <Text textAlign={"left"} fontSize={"30px"}>
-          Shipping Address
-        </Text>
-      </Box>
-      <Box
-        border={"1px solid blu"}
-        display={"flex"}
-        justifyContent="space-between"
-        width={"80%"}
-        m="25px auto"
-      >
-        <Box width={"50%"} border="1px solid re">
-          <Box className="FormBox" border={"1px solid re"}>
-            <FormControl isRequired>
-              <Box display={"flex"} justifyContent={"space-between"} mb="20px">
-                <Box border={"1px solid re"} width="49%">
-                  <FormLabel>First Name</FormLabel>
-                  <Input
-                    placeholder="Name"
-                    type={"text"}
-                    width="100%"
-                    border={"1px solid black"}
-                    borderRadius="none"
-                    name="firstname"
-                    isRequired={true}
-                    value={firstname}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </Box>
+      {isLargerThan800 ? <Navbar /> : <MobileNav />}
 
-                <Box border={"1px solid re"} width="49%">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input
-                    placeholder="Lastname"
-                    type="text"
-                    width="100%"
-                    border={"1px solid black"}
-                    borderRadius="none"
-                    name="lastname"
-                    value={lastname}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </Box>
-              </Box>
-              <FormLabel>Pin Code</FormLabel>
-              <Input
-                placeholder="Pin Code"
-                type={"number"}
-                width="49%"
-                border={"1px solid black"}
-                borderRadius="none"
-                mb="20px"
-                name="pincode"
-                value={pincode}
-                onChange={(e) => handleChange(e)}
-              />
-              <FormLabel>Address Line 1</FormLabel>
-              <Input
-                placeholder="Address Line 1"
-                type={"text"}
-                border={"1px solid black"}
-                borderRadius="none"
-                mb="10px"
-                name="address1"
-                value={address1}
-                onChange={(e) => handleChange(e)}
-              />
-              <FormLabel>Address Line 2</FormLabel>
-              <Input
-                placeholder="Address Line 2"
-                type={"text"}
-                border={"1px solid black"}
-                borderRadius="none"
-                mb="10px"
-                name="address2"
-                value={address2}
-                onChange={(e) => handleChange(e)}
-              />
-              <Box display={"flex"} justifyContent={"space-between"} mb="20px">
-                <Box border={"1px solid re"} width="49%">
-                  <FormLabel>City</FormLabel>
-                  <Input
-                    placeholder="City"
-                    type={"text"}
-                    width="100%"
-                    border={"1px solid black"}
-                    borderRadius="none"
-                    name="city"
-                    value={city}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </Box>
-
-                <Box border={"1px solid re"} width="49%">
-                  <FormLabel>State</FormLabel>
-                  <Input
-                    placeholder="State"
-                    type="text"
-                    width="100%"
-                    border={"1px solid black"}
-                    borderRadius="none"
-                    name="state"
-                    value={state}
-                    onChange={(e) => handleChange(e)}
-                  />
-                </Box>
-              </Box>
-              <FormLabel>Phone Number</FormLabel>
-              <Input
-                placeholder="Phone Number"
-                type={"number"}
-                width="49%"
-                border={"1px solid black"}
-                borderRadius="none"
-                mb="20px"
-                name="phone"
-                value={phone}
-                onChange={(e) => handleChange(e)}
-              />
-            </FormControl>
-          </Box>
+      <Box pb="50px">
+        {/* Address Box */}
+        <Box m="auto"mt="10px"width={"80%"}>
+          <Text textAlign={"left"} fontSize={"25px"}>
+            Shipping Address
+          </Text>
         </Box>
+
         <Box
-          border={"1px solid re"}
-          position="sticky"
-          top={100}
-          className="Price section"
-          ml="5"
-          width={"30%"}
-          pt="15px"
+         
+          display={{base:"grid",sm:"flex"}}
+          justifyContent="space-around"
+          width={"80%"}
+          m="auto"
         >
-          <Box className="couponCode">
-            <Text fontSize={"16px"} my="5px" mb="15px">
-              Coupons
-            </Text>
-            <InputGroup size="md">
-              <Input
-                // pr="5px"
-                type="text"
-                placeholder="Enter Coupon"
-                _placeholder={{ color: "grey", paddingLeft: "1px" }}
-                borderRadius={"none"}
-                border="1px solid grey"
-              />
-              <InputRightElement width="">
-                <Button
-                  variant={"outline"}
-                  h="1.75rem"
-                  size="sm"
-                  onClick={""}
-                  borderRadius={"none"}
-                  color="#007db8"
-                  mr="2px"
-                >
-                  Apply Coupon
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+          <Box width={{base:"100%",sm:"50%"}} >
+            <Box  border={"1px solid re"}>
+              <FormControl isRequired>
+                <Box display={"flex"} justifyContent={"space-between"} mb="20px">
+                  <Box border={"1px solid re"} width="49%">
+                    <FormLabel>First Name</FormLabel>
+                    <Input
+                      placeholder="Name"
+                      type={"text"}
+                      width="100%"
+                      name="firstname"
+                      isRequired={true}
+
+
+                    />
+                  </Box>
+
+                  <Box border={"1px solid re"} width="49%">
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                      placeholder="Lastname"
+                      type="text"
+                      width="100%"
+                      name="lastname"
+
+
+                    />
+                  </Box>
+                </Box>
+                <FormLabel>Pin Code</FormLabel>
+                <Input
+                  placeholder="Pin Code"
+                  type={"number"}
+                  width="49%"
+
+                  mb="20px"
+                  name="pincode"
+
+
+                />
+                <FormLabel>Address Line 1</FormLabel>
+                <Input
+                  placeholder="Address Line 1"
+                  type={"text"}
+
+                  mb="10px"
+                  name="address1"
+
+
+                />
+                <FormLabel>Address Line 2</FormLabel>
+                <Input
+                  placeholder="Address Line 2"
+                  type={"text"}
+                  mb="10px"
+                  name="address2"
+
+
+                />
+                <Box display={"flex"} justifyContent={"space-between"} mb="20px">
+                  <Box border={"1px solid re"} width="49%">
+                    <FormLabel>City</FormLabel>
+                    <Input
+                      placeholder="City"
+                      type={"text"}
+                      width="100%"
+                      name="city"
+
+
+                    />
+                  </Box>
+
+                  <Box border={"1px solid re"} width="49%">
+                    <FormLabel>State</FormLabel>
+                    <Input
+                      placeholder="State"
+                      type="text"
+                      width="100%"
+                      name="state"
+
+
+                    />
+                  </Box>
+                </Box>
+                <FormLabel>Phone Number</FormLabel>
+                <Input
+                  placeholder="Phone Number"
+                  type={"number"}
+                  width="49%"
+
+                  mb="20px"
+                  name="phone"
+
+
+                />
+              </FormControl>
+            </Box>
           </Box>
-          <Box border="1px solid black">
-            <Box borderBottom={"1px solid black"} p="10px">
-              <Text>Estimate Shipping and Tax</Text>
+
+          <Box width={{base:"100%",sm:"30%"}} >
+            {/* Payment Box */}
+            <Box padding={"5px"} margin={"5px"} >
+
+              <Text fontFamily={"Lora"} fontWeight="700" textAlign={"left"} color="rgb(51, 51, 51)">Order Details</Text>
+              <Flex padding={"5px"} justifyContent={"space-between"} color="rgb(51, 51, 51)">
+                <Text >Bag total</Text>
+                <Text>{Number(sum)}</Text>
+              </Flex>
+
+              <Flex>
+
+
+              </Flex>
+
+              <Flex padding={"5px"} justifyContent={"space-between"} fontWeight="600" color="rgb(51, 51, 51)" >
+                <Text>Discount</Text>
+
+                <Text>{Number(sum) - total}</Text>
+
+              </Flex>
+              <Flex padding={"5px"} justifyContent={"space-between"} color="rgb(51, 51, 51)" >
+                <Text>Delivery </Text>
+                <Text>{Number(sum) >= 1000 ? "Free " : "RS 99"}</Text>
+
+              </Flex>
+              <Flex padding={"5px"} justifyContent={"space-between"} fontWeight="600" color="rgb(51, 51, 51)" >
+                <Text>Order total</Text>
+
+                <Text>{total}</Text>
+              </Flex>
+              {/* <Paymentmodal /> */}
+              <Button onClick={() => navigate("/checkout")} bg={"rgb(213,162,73)"} width="100%" padding={"4px"} margin="4px" color="white" >Proceed To Ship</Button>
+
+
             </Box>
-            <Box p="10px" display={"flex"} justifyContent={"space-between"}>
-              <Text>Subtotal</Text>
-              {/* <Text>Rs. {totalPrice}</Text> */}
+            <Box>
+              <Image src="https://user-images.githubusercontent.com/52581/44384465-5e312780-a570-11e8-9336-7b54978a9e64.png" />
             </Box>
-            <Box p="10px" display={"flex"} justifyContent={"space-between"}>
-              <Text>Shipping (Express shippinhg)</Text>
-              <Text>Rs. 0</Text>
-            </Box>
-            <Box p="10px" display={"flex"} justifyContent={"space-between"}>
-              <Text>Order Total</Text>
-              {/* <Text fontWeight={500}>Rs. {totalPrice}</Text> */}
-            </Box>
-            <Box mt="15px" pb={"30px"}>
-              <Button
-                borderRadius={"none"}
-                width="100%"
-                bg="#5e9f10"
-                color="white"
-                _hover={{
-                  color: "#5e9f10",
-                  backgroundColor: "white",
-                  border: "1px solid #5e9f10",
-                }}
-                onClick={(e) => handleSubmit(e)}
-              >
-                {" "}
-                Proceed to Checkout
-              </Button>
-            </Box>
-          </Box>
-          <Box>
-            <Image src="https://user-images.githubusercontent.com/52581/44384465-5e312780-a570-11e8-9336-7b54978a9e64.png" />
           </Box>
         </Box>
       </Box>
-    </Box>
+
+        <Text padding="10px" textAlign={"left"} width="80%" margin="auto" color={"rgb(213,162,73)"} fontSize="20px">Items in your bag</Text>
+      <Box  width={"80%"} margin="auto" display={"grid"} gap="10px" justifyContent="space-between" gridTemplateColumns={{base:"repeat(1,1fr)",sm:"repeat(2,1fr)",md:"repeat(3,1fr)"}} marginBottom={"50px"}>
+        
+        {
+          cart.map((item) =>
+            <Box display={"flex"} gap="10px">
+
+              < Image width="100px" borderRadius="20%" src={item.src} />
+              <Box display={"grid"}>
+
+                <Text marginTop={"10px"}>{item.brand}</Text>
+                <Text >{item.title}</Text>
+              </Box>
+            </Box>
+          )
+        }
+      </Box>
     </>
   );
 }

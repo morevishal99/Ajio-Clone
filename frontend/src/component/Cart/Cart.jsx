@@ -1,11 +1,11 @@
 import axios from 'axios'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Popover, PopoverTrigger, PopoverContent, PopoverHeader, PopoverBody, PopoverArrow, PopoverCloseButton, Select, useToast, } from '@chakra-ui/react'
 import { Box, Button, Checkbox, CheckboxGroup, Flex, Image, Stack, Text } from '@chakra-ui/react';
-import { Input, useDisclosure } from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
 import Paymentmodal from '../PaymentModel/Payments';
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 // import { getCartData } from '../../redux/action'
 import { useMediaQuery } from '@chakra-ui/react'
 import Navbar from '../Navbar/Navbar';
@@ -15,14 +15,17 @@ import cartg from "./cart.png"
 
 const Cart = () => {
     const [cart, setcart] = useState([])
+    console.log('cart: ', cart.length);
 
-    const [cartitem, setCartitem] = useState([])
+    // const [cartitem, setCartitem] = useState([])
     // const [count, setCount] = useState(1)
-    const [counter, setCounter] = useState(1)
-    const dispatch = useDispatch()
-    const ref = useRef()
+    // const [counter, setCounter] = useState(1)
+    // const dispatch = useDispatch()
+    // const ref = useRef()
+    const [coupon, setcoupon] = useState('');
+    console.log('coupon: ', coupon);
     const navigate = useNavigate()
-    const { isOpen, onToggle } = useDisclosure()
+    // const { isOpen, onToggle } = useDisclosure()
     const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
     const [qty, setQty] = useState(1);
     const toast = useToast()
@@ -51,13 +54,13 @@ const Cart = () => {
     }
 
 
-    const deleteitem = (id) => {
+    const deleteitem = (id,title) => {
 
         axios.delete(`https://kind-plum-agouti-tam.cyclic.app/cart/delete/${id}`)
 
             .then(res => getcartdata())
         toast({
-            title: `Product Deleted From Cart `,
+            title: `${title} Deleted From Cart `,
             position: "top",
             status: 'error',
             duration: 3000,
@@ -78,11 +81,11 @@ const Cart = () => {
         })
 
         // axios.post("https://kind-plum-agouti-tam.cyclic.app/wishlist", item)
-            // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist", item)
-            // .then(r => setCartitem(r.data))
+        // axios.post("https://dizzy-plum-donkey.cyclic.app/wishlist", item)
+        // .then(r => setCartitem(r.data))
 
         // axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
-            // .then(res => setCartitem(res.data))
+        // .then(res => setCartitem(res.data))
     }
     let sum = 0;
     for (let i = 0; i < cart.length; i++) {
@@ -95,7 +98,7 @@ const Cart = () => {
 
             axios.patch(`https://kind-plum-agouti-tam.cyclic.app/cart/update/${id}`, payload)
 
-                .then((res) => 
+                .then((res) =>
                     getcartdata()
                 )
             toast({
@@ -108,9 +111,75 @@ const Cart = () => {
         }, 1000)
         // .catch((e) => console.log(e));
     };
+
+    const couponfunc = () => {
+
+        if (sum <= 1500) {
+            if (coupon === "GET500OFF") {
+                toast({
+                    title: `Coupon Applied `,
+                    position: "top",
+                    status: 'success',
+                    duration: 500,
+                    isClosable: true,
+                })
+                return - 500
+            } else {
+                return 0
+            }
+        }
+        if (sum <= 2499) {
+            if (coupon === "GET700OFF") {
+                toast({
+                    title: `Coupon Applied `,
+                    position: "top",
+                    status: 'success',
+                    duration: 500,
+                    isClosable: true,
+                })
+                return - 700
+            } else {
+                return 0
+            }
+        }
+        if (sum >= 4000) {
+            if (coupon === "SHOPNOW") {
+                toast({
+                    title: `Coupon Applied `,
+                    position: "top",
+                    status: 'success',
+                    duration: 500,
+                    isClosable: true,
+                })
+                return - 1500
+            } else {
+                return 0
+            }
+        }
+        else {
+            if (coupon === "FREEDEL") {
+                toast({
+                    title: `Coupon Applied `,
+                    position: "top",
+                    status: 'success',
+                    duration: 500,
+                    isClosable: true,
+                })
+                return 0
+            } else {
+                return 99
+            }
+        }
+    }
+    const total = Number(sum) + couponfunc()
+    const hanldePayment = () => {
+        localStorage.setItem("total", total)
+        localStorage.setItem("item", cart.length)
+        navigate("/address")
+    }
     useEffect(() => {
         getcartdata()
-    }, [counter, qty]);
+    }, [qty]);
     // console.clear()
     return (
         <>
@@ -120,7 +189,7 @@ const Cart = () => {
                     <div>
                         <img src="https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg" alt="" />
                         <h1 style={{ padding: "20px", color: "rgb(88, 88, 88)", fontFamily: "SourceSansProSemiBold", fontWeight: "400" }}>Your Shopping Bag is Empty!!</h1>
-                        <Image width={"200px"} backgroundColor={"white"} color={"red"} margin="auto" borderRadius={"20px"} marginBottom={"20px"} src={cartg}/>
+                        <Image width={"200px"} backgroundColor={"white"} color={"red"} margin="auto" borderRadius={"20px"} marginBottom={"20px"} src={cartg} />
                     </div>
 
                     <Button onClick={handleclick} bg={"rgb(213,162,73)"} padding="10px" color="white">Continue Shopping</Button>
@@ -241,7 +310,7 @@ const Cart = () => {
                                             </div>
                                             <div>
                                                 <div style={{ display: "flex", gap: "20px" }}>
-                                                    <Button onClick={() => deleteitem(item._id)}> Delete</Button>
+                                                    <Button onClick={() => deleteitem(item._id,item.title)}> Delete</Button>
                                                     <Button onClick={() => addtowishlist(item, item._id)}> Move To Wishlist</Button></div>
                                             </div>
 
@@ -263,33 +332,44 @@ const Cart = () => {
                                 </Flex>
 
                                 <Flex>
-
-
+                                </Flex>
+                                <Flex padding={"5px"} justifyContent={"space-between"} fontWeight="600" color="rgb(51, 51, 51)" >
+                                    <Text>Discount</Text>
+                                    {/* <Text>{Number(sum) >= 1000 ? Number(sum) : Number(sum) + 99}</Text> */}
+                                    {/* <Text>{Number(sum) + couponfunc()}</Text> */}
+                                    <Text>{total - sum}</Text>
                                 </Flex>
                                 <Flex padding={"5px"} justifyContent={"space-between"} color="rgb(51, 51, 51)" >
                                     <Text>Delivery </Text>
-                                    <Text>{Number(sum) >= 1000 ? "Free delivery" : "Rs 99"}</Text>
+                                    <Text>{Number(sum) >= 1000 ? "Free " : couponfunc()}</Text>
+                                    {/* <Text>{couponfunc()}</Text> */}
                                 </Flex>
+
                                 <Flex padding={"5px"} justifyContent={"space-between"} fontWeight="600" color="rgb(51, 51, 51)" >
                                     <Text>Order total</Text>
-                                    <Text>{Number(sum) >= 1000 ? Number(sum) : Number(sum) + 99}</Text>
+                                    {/* <Text>{Number(sum) >= 1000 ? Number(sum) : Number(sum) + 99}</Text> */}
+                                    {/* <Text>{Number(sum) + couponfunc()}</Text> */}
+                                    <Text>{total}</Text>
                                 </Flex>
-                                <Paymentmodal total={sum} />
+
+                                {/* <Paymentmodal total={total} /> */}
+                                <Button bg={"rgb(213,162,73)"} width="100%" padding={"4px"} margin="4px" color="white" onClick={() => hanldePayment()}>Proceed To Ship</Button>
+
 
                             </Box>
                             {/* coupon box */}
                             <Box marginTop={"50px"}>
                                 <Text>Apply Coupon</Text>
                                 <Flex gap={"10px"} padding="10px">
-                                    <Input border={"grey"} width={"90%"} placeholder='Enter Coupon Code' />
-                                    <Button>Apply</Button>
+                                    <Input border={"grey"} width={"90%"} placeholder='Enter Coupon Code' value={coupon} />
+                                    {/* <Button>Apply</Button> */}
                                 </Flex>
                                 <Box bg={"white"} textAlign="left" overflow={"scroll"} height="500px" padding={"10px"} border="1px dashed black">
                                     <Text textAlign={"left"}>Applicable Coupons</Text>
                                     <CheckboxGroup colorScheme='green' defaultValue={""}>
                                         <Stack spacing={[1, 5]} direction={['row', 'column']}>
                                             <hr />
-                                            <Checkbox value='FREEDEL'>
+                                            <Checkbox onChange={(e) => setcoupon(e.target.value)} value='FREEDEL'>
                                                 <Box>
                                                     <Text fontSize={"13px"}>Savings : ₹1.00</Text>
                                                     <Text fontSize={"16px"}>FREEDEL</Text>
@@ -303,11 +383,11 @@ const Cart = () => {
                                     <CheckboxGroup colorScheme='green' defaultValue={""}>
                                         <Stack spacing={[1, 5]} direction={['row', 'column']}>
                                             <hr />
-                                            <Checkbox value='FREESHIP'>
+                                            <Checkbox onChange={(e) => setcoupon(e.target.value)} value='GET500OFF'>
                                                 <Box>
-                                                    <Text fontSize={"13px"}>Savings : ₹1.00</Text>
-                                                    <Text fontSize={"16px"}>FREESHIP</Text>
-                                                    <Text fontSize={"10px"}>Shipping on us for Your First Purchase.</Text>
+                                                    <Text fontSize={"13px"}>Savings : ₹500</Text>
+                                                    <Text fontSize={"16px"}>GET500OFF</Text>
+                                                    <Text fontSize={"10px"}>500 Off On Purchase of 1499.</Text>
                                                 </Box>
                                             </Checkbox>
                                             <hr />
@@ -317,39 +397,26 @@ const Cart = () => {
                                     <CheckboxGroup colorScheme='green' defaultValue={""}>
                                         <Stack spacing={[1, 5]} direction={['row', 'column']}>
                                             <hr />
-                                            <Checkbox value='!100'>
+                                            <Checkbox onChange={(e) => setcoupon(e.target.value)} value='GET700OFF'>
                                                 <Box>
-                                                    <Text fontSize={"13px"}>Savings : ₹100.00</Text>
+                                                    <Text fontSize={"13px"}>Savings : ₹700.00</Text>
                                                     <Text fontSize={"16px"}>!100</Text>
-                                                    <Text fontSize={"10px"}>Get 100Rs off</Text>
+                                                    <Text fontSize={"10px"}>Get 700Rs off on purchase of 2499</Text>
                                                 </Box>
                                             </Checkbox>
                                             <hr />
 
                                         </Stack>
                                     </CheckboxGroup>
-                                    <CheckboxGroup colorScheme='green' defaultValue={""}>
-                                        <Stack spacing={[1, 5]} direction={['row', 'column']}>
-                                            <hr />
-                                            <Checkbox value='AJIOONE'>
-                                                <Box>
-                                                    <Text fontSize={"13px"}>Savings : 50%</Text>
-                                                    <Text fontSize={"16px"}>AJIOONE</Text>
-                                                    <Text fontSize={"10px"}>Buy 1 And Get One Free</Text>
-                                                </Box>
-                                            </Checkbox>
-                                            <hr />
 
-                                        </Stack>
-                                    </CheckboxGroup>
                                     <CheckboxGroup colorScheme='green' defaultValue={""}>
                                         <Stack spacing={[1, 5]} direction={['row', 'column']}>
                                             <hr />
-                                            <Checkbox value='SHOPNOW'>
+                                            <Checkbox onChange={(e) => setcoupon(e.target.value)} value='SHOPNOW'>
                                                 <Box>
                                                     <Text fontSize={"13px"}>Savings : ₹1500</Text>
                                                     <Text fontSize={"16px"}>SHOPNOW</Text>
-                                                    <Text fontSize={"10px"}>Get 1500 Off On Order Above 5000</Text>
+                                                    <Text fontSize={"10px"}>Get 1500 Off On Order Above 4000</Text>
                                                 </Box>
                                             </Checkbox>
                                             <hr />
@@ -359,7 +426,7 @@ const Cart = () => {
                                     <CheckboxGroup colorScheme='green' defaultValue={""}>
                                         <Stack spacing={[1, 5]} direction={['row', 'column']}>
                                             <hr />
-                                            <Checkbox value='BIGSAVINS'>
+                                            <Checkbox onChange={(e) => setcoupon(e.target.value)} value='BIGSAVINS'>
                                                 <Box>
 
                                                     <Text fontSize={"16px"}>BIGSAVINS</Text>

@@ -17,6 +17,8 @@ import Cart from '../component/Cart/Cart';
 import PrivateRoute from './PrivateRoute';
 
 import Address from '../component/PaymentModel/Address';
+import Checkout from '../component/PaymentModel/Checkout';
+import Thankyou from '../component/PaymentModel/Thankyou';
 
 
 
@@ -46,6 +48,8 @@ const AllRoutes = () => {
             <Route path="/payment" element={<PaymentsPage />} />
             <Route path="/address" element={<Address />} />
             <Route path="/homeandkitchen" element={<Homeandkitchen />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/thankyou" element={<Thankyou />} />
         </Routes>
     )
 }

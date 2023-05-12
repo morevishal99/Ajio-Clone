@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Fade, Image, Text, } from '@chakra-ui/react'
 import { Box, Button, useDisclosure } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Carousel from './Caurosal'
@@ -62,24 +62,19 @@ const SingleCardPage = () => {
         })
             .then((res) => {
                 // console.log("tot:", res);
-                toast({
-                    title: "Add to cart",
-                    description: "Product is successfully added to cart",
-                    status: "success",
-                    duration: 4000,
-                    isClosable: true,
-                });
             })
             .catch((error) => {
                 console.error(error);
             });
-        toast({
-            title: `Product Added to Cart Successfully`,
-            position: "top",
-            status: 'success',
-            duration: 2000,
-            isClosable: true,
-        })
+            toast({
+                title: `${product.title} added to cart`,
+                // description: "Product is successfully added to cart",
+                status: "success",
+                duration: 3000,
+                isClosable: true,
+                position:"top"
+            });
+       
     }
 
     const navigateto = () => {
@@ -94,20 +89,21 @@ const SingleCardPage = () => {
 
             <Box >
                 <Box style={{ placeItems: "center" }}>
-                    <Image marginLeft={"60px"} placeItems={"center"} style={{ padding: "30px", }} width={{ base: "250px", md: "350px", lg: "400px" }} src={product.src} alt={product.brand} />
+                    <Image  width={{ base: "250px", md: "350px", lg: "400px" }} margin={"auto"} padding="10px" borderRadius={"10%"} src={product.src} alt={product.brand} />
 
                     <Box style={{ textAlign: "center", }} >
-                        <Button color={"grey"} border="1px solid grey" mt={4} padding="5px" onClick={onToggle}>Returns Details</Button>
+                        <Button color={"grey"} border="1px solid grey"  padding="5px" onClick={onToggle}>Returns Details</Button>
                         <Fade in={isOpen}>
                             <Box
-                                p='20px'
+                                p='10px'
                                 color='black'
-                                mt='4'
+                                
                                 bg='white'
                                 rounded='md'
                                 shadow='md'
-                                width={400}
+                                width={300}
                                 fontSize="10px"
+                                margin={"auto"}
                             >
                                 Easy 15 days return and exchange. Return Policies may vary based on products and promotions. For full details on our Returns Policies, please click here․
                             </Box>
@@ -129,14 +125,7 @@ const SingleCardPage = () => {
 
                     <h5 style={{ color: "rgb(58,182,73)" }}>Offer Price ₹{product.offer}</h5>
                     <p>Price Inclusive Of All Taxes</p>
-                    <select style={{ border: "1px solid black", width: "200px", marginTop: "10px", padding: "10px" }} value={size} onChange={handleSizeChange}>
-                        <option value="" >Select Size</option>
-                        <option value="xs">Extra small (xs)</option>
-                        <option value="s">Small (s)</option>
-                        <option value="l">Large</option>
-                        <option value="el">Extra Large (xl)</option>
-                        <option value="xxl"> xxl</option>
-                    </select>
+                   
                 </Box>
 
                 {/* <DrawerExample/> */}
