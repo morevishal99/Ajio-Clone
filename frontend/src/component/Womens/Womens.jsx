@@ -15,6 +15,8 @@ import {
 
   Hide,
 
+  Input,
+
   Select,
   Show,
   Stack,
@@ -22,10 +24,7 @@ import {
 
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getProductData,
-  handleSortByRedux,
-} from "../../redux/Products/action";
+import { getProductData, handleSortByRedux, } from "../../redux/Products/action";
 import { Card } from "../Card/Card";
 import Navbar from "../Navbar/Navbar";
 import MobileNav from '../Navbar/MobileNav';
@@ -38,7 +37,8 @@ function Womens() {
   const dispatch = useDispatch();
   const Products = useSelector((store) => store.ProductReducer.Products);
   // console.log('Products: ', Products);
-  // const [value,setInputValue]=useState("")
+  const [inputvalue, setInputValue] = useState("")
+  console.log('inputvalue: ', inputvalue);
   const [priceFilter, setPriceFilter] = React.useState([]);
   const [count, setCount] = useState(0)
   const [isLargerThan800] = useMediaQuery("(min-width: 800px)");
@@ -64,7 +64,7 @@ function Womens() {
     }
   };
 
-  const categoryFilter = () => { };
+
 
   const handlePriceFilterChange = (event) => {
     const value = parseInt(event.target.value);
@@ -76,19 +76,50 @@ function Womens() {
     }
     setPriceFilter(newPriceFilter);
   };
-  const [inputValue, setInputValue] = React.useState("");
+  let [brandValue, setbrandValue] = React.useState("");
+  let [categoryValue, setcategoryValue] = React.useState("");
+  console.log('categoryValue: ', categoryValue);
   // console.log('inputValue: ', inputValue);
   const categoryFilterFunc = (e) => {
-    setInputValue(e.target.value)
+    setcategoryValue(e.target.value)
+    // setInputValue('');
+    console.log('categoryValue: ', categoryValue);
+  }
+
+  const brandFilterFunc = (e) => {
+    setbrandValue(e.target.value)
     // setInputValue('');
   }
-  const filter_Data = Products.filter((item) => item.brand === inputValue)
+  let filter_Data = []
+  if (brandValue) {
+
+    filter_Data = Products.filter((item) => item.brand === brandValue)
+  }
+  if (categoryValue) {
+
+    filter_Data = Products.filter((item) => item.title.includes(categoryValue))
+  }
+  if (inputvalue) {
+
+    let newvalue = inputvalue.charAt(0).toUpperCase() + inputvalue.slice(1);
+
+    console.log('str: ', newvalue);
+    filter_Data = Products.filter((item) => item.title.includes(newvalue))
+
+  }
+  if (categoryValue && brandValue) {
+
+    filter_Data = Products.filter((item) => item.brand === brandValue)
+  }
+  const getinputvalue = (e) => {
+    setInputValue(e.target.value)
+  }
   // console.log('filtered_data: ', filter_Data);
   // setInputValue("")
 
   useEffect((Products) => {
     dispatch(getProductData("women"));
-  }, [inputValue]);
+  }, [brandValue || categoryValue]);
   return (
     <>
 
@@ -100,7 +131,7 @@ function Womens() {
           <Flex justifyContent={"space-around"}>
 
             <Box>
-              <Mobilesidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
+              <Mobilesidebar onPriceFilterChange={handlePriceFilterChange} brandFilter={brandFilterFunc} categoryfilter={categoryFilterFunc}/>
             </Box>
             <Box>
               <Accordion display={"flex"} fontSize="10px" fontWeight={400} lineHeight='24px' color=' rgb(102, 102, 102)' border="1px solid rgb(240,240,240)" padding={"10px"} justifyContent="center" allowMultiple>
@@ -131,15 +162,6 @@ function Womens() {
                     </Stack>
                   </AccordionPanel>
                 </AccordionItem>
-
-
-
-
-
-
-
-
-
               </Accordion>
             </Box>
 
@@ -151,18 +173,18 @@ function Womens() {
       <Box display="flex" justifyContent="space-between" maxWidth="1250px" margin="auto" marginTop={"20px"} gap="40px">
         <Box display={{ base: "none", sm: "flex", md: "flex", lg: "flex" }} width="20%" marginTop="50px">
           <Box className="women-left">
-            <Sidebar onPriceFilterChange={handlePriceFilterChange} categoryFilter={categoryFilterFunc} />
+            <Sidebar onPriceFilterChange={handlePriceFilterChange} brandFilter={brandFilterFunc} categoryfilter={categoryFilterFunc} />
           </Box>
         </Box>
 
         <Box width={{ base: "100%", sm: "100%", md: "100%", lg: "70%" }}>
 
-          <Box display={{ base: "grid", sm: "flex" }} gap="20px" justifyContent={{ base: "center", sm: "right" }}>
+          <Box display={{ base: "grid", sm: "flex" }} gap="20px">
             <Hide breakpoint='(max-width: 450px)'>
 
-              <Flex>
-
-                <Select variant='unstyled' padding={"7px"} border={"none"} onChange={(e) => handleSorting(e)} id="sort-select">
+              <Flex justifyContent={"space-between"}  width={"100%"}>
+                <Input width="60%" type="text" onInput={getinputvalue} placeholder="Search Here" />
+                <Select width="30%" variant='unstyled' padding={"7px"} border={"none"} onChange={(e) => handleSorting(e)} id="sort-select">
                   <option value=""> Select Price</option>
                   <option value="highToLow">Price High to Low</option>
                   <option value="lowToHigh">Price Low to High</option>

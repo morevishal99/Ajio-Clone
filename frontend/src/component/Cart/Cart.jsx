@@ -22,6 +22,7 @@ const Cart = () => {
     // const [counter, setCounter] = useState(1)
     // const dispatch = useDispatch()
     // const ref = useRef()
+
     const [coupon, setcoupon] = useState('');
     console.log('coupon: ', coupon);
     const navigate = useNavigate()
@@ -54,7 +55,7 @@ const Cart = () => {
     }
 
 
-    const deleteitem = (id,title) => {
+    const deleteitem = (id, title) => {
 
         axios.delete(`https://kind-plum-agouti-tam.cyclic.app/cart/delete/${id}`)
 
@@ -114,7 +115,7 @@ const Cart = () => {
 
     const couponfunc = () => {
 
-        if (sum <= 1500&&sum>=1000) {
+        if (sum <= 1500 && sum >= 1000) {
             if (coupon === "GET500OFF") {
                 toast({
                     title: `Coupon Applied `,
@@ -124,9 +125,9 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 500
-            } 
+            }
         }
-        if (sum <= 2500 &&sum>=2400) {
+        if (sum <= 2500 && sum >= 2400) {
             if (coupon === "GET700OFF") {
                 toast({
                     title: `Coupon Applied `,
@@ -136,7 +137,7 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 700
-            } 
+            }
         }
         if (sum >= 4000) {
             if (coupon === "SHOPNOW") {
@@ -148,7 +149,7 @@ const Cart = () => {
                     isClosable: true,
                 })
                 return - 1500
-            } 
+            }
         }
         else {
             if (coupon === "FREEDEL") {
@@ -229,86 +230,93 @@ const Cart = () => {
                 </Box> :
                 <Box>
                     <Image width={"80%"} margin="auto" src={"https://assets.ajio.com/cms/AJIO/WEB/28032021-D-cartpagebanner-relianceones.jpg"} />
+                    <Text width={"80%"} margin="auto" fontSize={"20px"} color="goldenrod" textAlign={"left"}>My Bag ({cart.length}item)</Text>
                     <Box width={"80%"} display={{ base: "grid", sm: "flex" }} margin="auto" gap={"20px"} >
-                        <Box width={{ base: "100%", sm: "70%" }} margin={"auto"} marginTop={"30px"} >
-                            <Text fontSize={"20px"} color="goldenrod" textAlign={"left"}>My Bag ({cart.length}item)</Text>
-                            <Box style={{ textAlign: "center" }}>
+
+                        <Box width={{ base: "100%", sm: "70%" }} margin={"auto"} marginTop={"30px"}>
+
+                            <Box   style={{ textAlign: "center" }} >
                                 {cart.map((item) =>
-                                    <Box key={item._id} padding={"5px"} border="1px solid rgb(250,230,250)" display={{ base: "grid", md: "flex" }} justifyContent="space-evenly" gap="20px" marginTop="20px">
+                                    <Box key={item._id} padding={"5px"} border="1px solid rgb(250,230,250)" display={{ base: "grid", md: "flex" }} justifyContent="space-between" gap="20px" marginTop="20px">
                                         <Image src={item.src} width={{ base: "200px", sm: "200px" }} margin={{ base: "auto" }} alt="" />
-                                        <Text>{item.brand}- <span> {item.title}</span> </Text>
+                                        <Box>
 
-                                        <Popover >
-                                            <PopoverTrigger>
-                                                <Button fontSize={"12px"}> Qty {item.quantity}</Button>
-                                            </PopoverTrigger>
-                                            <PopoverContent>
-                                                <PopoverArrow />
-                                                <PopoverCloseButton />
-                                                <PopoverHeader>Set Quantity!</PopoverHeader>
-                                                <PopoverBody>
-                                                    <Flex justifyContent={"center"}>
-                                                        <Button
-                                                            color={"#f43297"}
-                                                            variant="ghost"
-                                                            isDisabled={item.quantity === 1}
-                                                            _hover={
-                                                                qty > 1
-                                                                    ? {
-                                                                        transform: "translateY(-2px)",
-                                                                        boxShadow: "lg",
-                                                                    }
-                                                                    : null
-                                                            }
-                                                            onClick={() => {
-                                                                setQty((prev) => prev - 1);
-                                                                handleQuantity(item._id);
-                                                            }}
-                                                        >
-                                                            -
-                                                        </Button>
-                                                        <Button
-                                                            fontWeight={"semibold"}
-                                                            color={"#f43297"}
-                                                            variant="ghost"
-                                                            marginLeft="1"
-                                                        >
-                                                            {item.quantity}
-                                                        </Button>
-                                                        <Button
-                                                            color={"#f43297"}
-                                                            variant="ghost"
-                                                            _hover={{
-                                                                transform: "translateY(-2px)",
-                                                                boxShadow: "lg",
-                                                            }}
-                                                            // onClick={() => setQty((prev) => prev + 1)}
-                                                            onClick={() => {
-                                                                setQty((prev) => prev + 1);
-                                                                handleQuantity(item._id);
-                                                            }}
-                                                        >
-                                                            +
-                                                        </Button>
-                                                    </Flex></PopoverBody>
-                                            </PopoverContent>
-                                        </Popover>
+                                            <Text>{item.brand}- <span> {item.title}</span> </Text>
+
+                                            <Popover >
+                                                <PopoverTrigger>
+                                                    <Button fontSize={"12px"}> Qty {item.quantity}</Button>
+                                                </PopoverTrigger>
+                                                <PopoverContent>
+                                                    <PopoverArrow />
+                                                    <PopoverCloseButton />
+                                                    <PopoverHeader>Set Quantity!</PopoverHeader>
+                                                    <PopoverBody>
+                                                        <Flex justifyContent={"center"}>
+                                                            <Button
+                                                                color={"#f43297"}
+                                                                variant="ghost"
+                                                                isDisabled={item.quantity === 1}
+                                                                _hover={
+                                                                    qty > 1
+                                                                        ? {
+                                                                            transform: "translateY(-2px)",
+                                                                            boxShadow: "lg",
+                                                                        }
+                                                                        : null
+                                                                }
+                                                                onClick={() => {
+                                                                    setQty((prev) => prev - 1);
+                                                                    handleQuantity(item._id);
+                                                                }}
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <Button
+                                                                fontWeight={"semibold"}
+                                                                color={"#f43297"}
+                                                                variant="ghost"
+                                                                marginLeft="1"
+                                                            >
+                                                                {item.quantity}
+                                                            </Button>
+                                                            <Button
+                                                                color={"#f43297"}
+                                                                variant="ghost"
+                                                                _hover={{
+                                                                    transform: "translateY(-2px)",
+                                                                    boxShadow: "lg",
+                                                                }}
+                                                                // onClick={() => setQty((prev) => prev + 1)}
+                                                                onClick={() => {
+                                                                    setQty((prev) => prev + 1);
+                                                                    handleQuantity(item._id);
+                                                                }}
+                                                            >
+                                                                +
+                                                            </Button>
+                                                        </Flex></PopoverBody>
+                                                </PopoverContent>
+                                            </Popover>
+                                        </Box>
 
 
 
-                                        <div style={{ display: "grid", gap: "20px" }}>
+                                        <Box style={{ display: "grid", gap: "20px" }}>
                                             <div >
                                                 <h1> Discount  Rs.{item.discount}</h1>
                                                 <h1 style={{ color: "rgb(177, 153, 117)" }}>  ₹{item.discountPrice}  <span style={{ textDecoration: "line-through" }}>₹{item.orginalPrice} </span></h1>
                                                 <Text >Item Total ₹ {item.discountPrice * item.quantity}</Text>
                                             </div>
                                             <div>
-                                                <div style={{ display: "flex", gap: "20px" }}>
-                                                    <Button onClick={() => deleteitem(item._id,item.title)}> Delete</Button>
-                                                    <Button onClick={() => addtowishlist(item, item._id)}> Move To Wishlist</Button></div>
+                                                {/* <Box  display= {{md:"grid",lg:"flex"}} gap="15px" > */}
+                                                <Box display={{ md: "grid", lg: "flex" }} gap="15px" >
+                                                    <Button fontSize={"14px"} onClick={() => deleteitem(item._id, item.title)}> Delete</Button>
+                                                    <Button fontSize={"14px"} onClick={() => addtowishlist(item, item._id)}> Move To Wishlist</Button>
+                                                </Box>
                                             </div>
 
-                                        </div>
+                                        </Box>
 
                                     </Box>
                                 )}

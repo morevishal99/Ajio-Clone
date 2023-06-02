@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Fade, Image, Text, } from '@chakra-ui/react'
+import { Fade, Image, Link, Text, } from '@chakra-ui/react'
 import { Box, Button, useDisclosure } from '@chakra-ui/react'
 // import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,8 @@ import { useMediaQuery } from '@chakra-ui/react'
 import BottomBar from '../Cart/BottomBar'
 const SingleCardPage = () => {
     var product = JSON.parse(localStorage.getItem('ProductsDetails'))
+    const login=localStorage.getItem("login")||false
+    console.log(login)
 
 
     const toast = useToast()
@@ -51,29 +53,43 @@ const SingleCardPage = () => {
     }
 
     const addtobag = () => {
-        setcount(count++)
-        fetch("https://kind-plum-agouti-tam.cyclic.app/cart/add", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getItem("token")}`
-            },
-            body: JSON.stringify(product),
-        })
-            .then((res) => {
-                // console.log("tot:", res);
+       
+        if(login){
+
+            fetch("https://kind-plum-agouti-tam.cyclic.app/cart/add", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify(product),
             })
-            .catch((error) => {
-                console.error(error);
-            });
+                .then((res) => {
+                    // console.log("tot:", res);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+                toast({
+                    title: `${product.title} added to cart`,
+                    // description: "Product is successfully added to cart",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                    position:"top"
+                });
+        } else{
+
             toast({
-                title: `${product.title} added to cart`,
-                // description: "Product is successfully added to cart",
-                status: "success",
+                title: `Ooops You are Not Logged in `,
+                
+                description: `Please Login first`,
+                status: "error",
                 duration: 3000,
                 isClosable: true,
                 position:"top"
             });
+        }
        
     }
 
@@ -131,7 +147,7 @@ const SingleCardPage = () => {
                 {/* <DrawerExample/> */}
                 <Box style={{ display: "grid ", gap: "10px", justifyContent: "center" }}>
                     <Text bg={"rgb(253,248,235)"} width={300} fontSize="10px" padding={"5px"} margin="auto">Select your size to know your estimated delivery date.</Text>
-                    <Button disabled={count <= 1} onClick={addtobag} bg={"rgb(213,162,73)"} width={300} padding={"5px"} margin="auto"> Add to Bag</Button>
+                    <Button disable={login===false} onClick={addtobag} bg={"rgb(213,162,73)"} width={300} padding={"5px"} margin="auto"> Add to Bag</Button>
                     <Text width={300} fontSize="10px" padding={"5px"} margin="auto" color={"grey"}>HANDPICKED STYLES | ASSURED QUALITY</Text>
                     <Button bg={text ? "rgb(213,162,73)" : "red.600"} onClick={handletext} width={300} padding={"5px"} margin="auto"> {text ? "Save To WishList" : "Added To WishList"}</Button>
 
