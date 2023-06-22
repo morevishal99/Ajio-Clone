@@ -36,7 +36,6 @@ import Mobilesidebar from "../Sidebar/Mobilesidebar";
 function Womens() {
   const dispatch = useDispatch();
   const Products = useSelector((store) => store.ProductReducer.Products);
-  // console.log('Products: ', Products);
   const [inputvalue, setInputValue] = useState("")
   console.log('inputvalue: ', inputvalue);
   const [priceFilter, setPriceFilter] = React.useState([]);
@@ -64,8 +63,6 @@ function Womens() {
     }
   };
 
-
-
   const handlePriceFilterChange = (event) => {
     const value = parseInt(event.target.value);
     let newPriceFilter = [...priceFilter];
@@ -78,44 +75,34 @@ function Womens() {
   };
   let [brandValue, setbrandValue] = React.useState("");
   let [categoryValue, setcategoryValue] = React.useState("");
-  console.log('categoryValue: ', categoryValue);
-  // console.log('inputValue: ', inputValue);
   const categoryFilterFunc = (e) => {
     setcategoryValue(e.target.value)
-    // setInputValue('');
-    console.log('categoryValue: ', categoryValue);
   }
 
   const brandFilterFunc = (e) => {
     setbrandValue(e.target.value)
-    // setInputValue('');
   }
+
   let filter_Data = []
   if (brandValue) {
-
     filter_Data = Products.filter((item) => item.brand === brandValue)
   }
   if (categoryValue) {
-
     filter_Data = Products.filter((item) => item.title.includes(categoryValue))
   }
   if (inputvalue) {
-
     let newvalue = inputvalue.charAt(0).toUpperCase() + inputvalue.slice(1);
-
-    console.log('str: ', newvalue);
+    // console.log('str: ', newvalue);
     filter_Data = Products.filter((item) => item.title.includes(newvalue))
-
   }
-  if (categoryValue && brandValue) {
 
+  if (categoryValue && brandValue) {
     filter_Data = Products.filter((item) => item.brand === brandValue)
   }
+
   const getinputvalue = (e) => {
     setInputValue(e.target.value)
   }
-  // console.log('filtered_data: ', filter_Data);
-  // setInputValue("")
 
   useEffect((Products) => {
     dispatch(getProductData("women"));

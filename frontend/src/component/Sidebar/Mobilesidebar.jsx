@@ -167,4 +167,3 @@ const Mobilesidebar = ({ brandFilter, onPriceFilterChange,categoryfilter }) => {
 }
 
 export default Mobilesidebar
-// ok

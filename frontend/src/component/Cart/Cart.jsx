@@ -72,6 +72,7 @@ const Cart = () => {
 
 
     }
+
     const addtowishlist = (item, id) => {
         toast({
             title: `Wishlist function not enabled `,
@@ -88,6 +89,7 @@ const Cart = () => {
         // axios.delete(`https://dizzy-plum-donkey.cyclic.app/cart/${id}`)
         // .then(res => setCartitem(res.data))
     }
+
     let sum = 0;
     for (let i = 0; i < cart.length; i++) {
         sum += cart[i].discountPrice * cart[i].quantity;
@@ -151,7 +153,7 @@ const Cart = () => {
                 return - 1500
             }
         }
-        else {
+        if(sum<1000) {
             if (coupon === "FREEDEL") {
                 toast({
                     title: `Coupon Applied `,
@@ -164,8 +166,11 @@ const Cart = () => {
             } else {
                 return 99
             }
+        }else{
+            return 0
         }
     }
+    
     const total = Number(sum) + couponfunc()
     const hanldePayment = () => {
         localStorage.setItem("total", total)
@@ -343,7 +348,7 @@ const Cart = () => {
                                 </Flex>
                                 <Flex padding={"5px"} justifyContent={"space-between"} color="rgb(51, 51, 51)" >
                                     <Text>Delivery </Text>
-                                    <Text>{Number(sum) >= 1000 ? "Free " : couponfunc()}</Text>
+                                    <Text>{Number(sum) >= 1000 ? "Free" : couponfunc()}</Text>
                                     {/* <Text>{couponfunc()}</Text> */}
                                 </Flex>
 
