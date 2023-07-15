@@ -9,7 +9,6 @@ import {
   } from '@chakra-ui/react'
 
 const MobileItem = ({nameitem,item1,item2,item3,item4,item5,item6,item7,item8,item9,item10}) => {
- 
   return (
     <div style={{zIndex:"5"}}>
       <Menu>

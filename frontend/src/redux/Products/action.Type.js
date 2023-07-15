@@ -9,5 +9,9 @@ export const PATCHSINGLEPROD = "patchSingleProduct/PATCH";
 export const DELETESINGLEPROD = "deleteSingleProduct/DELETE";                           
 export const POSTREQ = "postData/POST";
 export const SORTINGLH = "sortingByLowToHigh"
+export const NAVVALUE="NAVVALUE"
+export const FILTERPROUCTS="FILTERPROUCTS"
+export const BRANDVALUE="BRANDVALUE"
+export const FILTERVALUE="FILTERVALUE"
  
 
